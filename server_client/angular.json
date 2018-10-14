@@ -5,7 +5,7 @@
   "projects": {
     "client": {
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "src/client",
       "projectType": "application",
       "prefix": "app",
       "schematics": {
