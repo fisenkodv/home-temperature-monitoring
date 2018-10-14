@@ -27,6 +27,9 @@
               "src/client/assets"
             ],
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/client/styles.scss"
             ],
             "scripts": []
@@ -76,6 +79,9 @@
             "tsConfig": "src/client/tsconfig.spec.json",
             "karmaConfig": "src/client/karma.conf.js",
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/client/styles.scss"
             ],
             "scripts": [],

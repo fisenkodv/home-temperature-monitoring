@@ -1,24 +1,15 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 
 import { HttpCacheService } from './http-cache.service';
 
-/**
- * Caches HTTP requests.
- * Use ExtendedHttpClient fluent API to configure caching for each request.
- */
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
   private forceUpdate = false;
 
   constructor(private httpCacheService: HttpCacheService) {}
 
-  /**
-   * Configures interceptor options
-   * @param {{update: boolean}} options If update option is enabled, forces request to be made and updates cache entry.
-   * @return {CacheInterceptor} The configured instance.
-   */
   configure(options?: { update?: boolean } | null): CacheInterceptor {
     const instance = new CacheInterceptor(this.httpCacheService);
     if (options && options.update) {

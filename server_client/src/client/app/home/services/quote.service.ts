@@ -4,7 +4,8 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 const routes = {
-  quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
+  quote: (c: RandomQuoteContext) =>
+    `https://api.chucknorris.io/jokes/random?category=${c.category}`,
 };
 
 export interface RandomQuoteContext {

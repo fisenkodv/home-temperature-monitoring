@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Shell } from '@app/shell/shell.service';
+import { Shell } from '@app/shell/services/shell.service';
 
 import { AboutComponent } from './about.component';
 
