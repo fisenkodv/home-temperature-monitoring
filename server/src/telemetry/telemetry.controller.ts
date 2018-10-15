@@ -9,7 +9,7 @@ export class TelemetryController {
   @Post()
   public async log(@Body() createTelemetryDto: CreateTelemetryDto) {
     this.telemetryService.log(
-      createTelemetryDto.deviceUuid,
+      createTelemetryDto.deviceId,
       createTelemetryDto.temperature,
       createTelemetryDto.humidity,
       createTelemetryDto.heatIndex,

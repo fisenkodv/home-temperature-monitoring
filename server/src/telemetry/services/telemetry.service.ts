@@ -7,25 +7,27 @@ import { DeviceService } from './device.service';
 
 @Injectable()
 export class TelemetryService {
+  private deviceMap: Map<string, number> = new Map<string, number>();
+
   constructor(
-    @InjectRepository(Telemetry)
-    private readonly telemetryRepository: Repository<Telemetry>,
+    @InjectRepository(Telemetry) private readonly telemetryRepository: Repository<Telemetry>,
     private readonly deviceService: DeviceService,
   ) {}
 
-  public async log(
-    deviceUuid: string,
-    temperature: number,
-    humidity: number,
-    heatIndex: number,
-  ) {
-    const device = await this.deviceService.createDevice(deviceUuid);
-    const telemetry = new Telemetry();
-    telemetry.device = device;
-    telemetry.temperature = temperature;
-    telemetry.humidity = humidity;
-    telemetry.heat_index = heatIndex;
-    telemetry.time_stamp = new Date();
+  public async log(deviceId: string, temperature: number, humidity: number, heatIndex: number) {
+    let id = this.deviceMap.get(deviceId);
+    if (id === undefined) {
+      const device = await this.deviceService.createDevice(deviceId);
+      id = device.id;
+      this.deviceMap.set(deviceId, id);
+    }
+    const telemetry = <Telemetry>{
+      device: { id: id },
+      temperature: temperature,
+      humidity: humidity,
+      heatIndex: heatIndex,
+      timeStamp: new Date(),
+    };
     await this.telemetryRepository.save(telemetry);
   }
 }

@@ -1,23 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Device } from './device.entity';
 
 @Entity()
 export class Telemetry {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @ManyToOne(type => Device, device => device.telemetry)
+  @ManyToOne(type => Device, device => device.telemetry, { nullable: false })
+  @JoinColumn({ name: 'device_id' })
   device: Device;
 
-  @Column()
+  @Column({ name: 'temperature' })
   temperature: number;
 
-  @Column()
+  @Column({ name: 'humidity' })
   humidity: number;
 
-  @Column()
-  heat_index: number;
+  @Column({ name: 'heat_index' })
+  heatIndex: number;
 
-  @Column()
-  time_stamp: Date;
+  @Column({ name: 'time_stamp' })
+  timeStamp: Date;
 }
