@@ -17,8 +17,7 @@ export class TelemetryService {
   public async log(deviceId: string, temperature: number, humidity: number, heatIndex: number) {
     let id = this.deviceMap.get(deviceId);
     if (id === undefined) {
-      const device = await this.deviceService.createDevice(deviceId);
-      id = device.id;
+      id = await this.deviceService.create(deviceId);
       this.deviceMap.set(deviceId, id);
     }
     const telemetry = <Telemetry>{

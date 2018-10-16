@@ -9,6 +9,6 @@ export class DeviceController {
 
   @Get()
   getDevices(): Promise<Device[]> {
-    return this.deviceService.getDevices();
+    return this.deviceService.getAll();
   }
 }

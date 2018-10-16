@@ -7,22 +7,26 @@ import { Repository } from 'typeorm';
 export class DeviceService {
   constructor(@InjectRepository(Device) private readonly deviceRepository: Repository<Device>) {}
 
-  public async createDevice(uuid: string): Promise<Device> {
-    const numberOfDevice = await this.deviceRepository.count({
-      where: { uuid },
-    });
-    if (numberOfDevice === 0) {
-      const device = <Device>{
-        uuid: uuid,
-        isActive: true,
-        name: 'unknown device',
-      };
-      this.deviceRepository.save(device);
-    }
-    return await this.deviceRepository.findOne({ where: { uuid } });
+  public async exists(deviceId: string): Promise<boolean> {
+    return (
+      (await this.deviceRepository.count({
+        where: { uuid: deviceId },
+      })) !== 0
+    );
   }
 
-  public async getDevices(): Promise<Device[]> {
+  public async create(deviceId: string, isActive: boolean = true, name: string = 'unknown device'): Promise<number> {
+    let device = <Device>{
+      uuid: deviceId,
+      isActive: isActive,
+      name: name,
+    };
+    await this.deviceRepository.save(device);
+    device = await this.deviceRepository.findOne({ where: { deviceId } });
+    return device.id;
+  }
+
+  public async getAll(): Promise<Device[]> {
     return await this.deviceRepository.find();
   }
 }
