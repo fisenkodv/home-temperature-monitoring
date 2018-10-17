@@ -34,8 +34,7 @@ class Receiver(object):
                 "device": int(data[0]),
                 "humidity": float(data[1]),
                 "celsius": float(data[2]),
-                "fahrenheit": float(data[3]),
-                "heatIndex": float(data[4])
+                "heatIndex": float(data[3])
             }
         else:
             return None

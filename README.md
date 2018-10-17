@@ -1,1 +1,5 @@
-# home-temperature-monitoring
+# Home Temperature Monitoring
+
+## License
+
+MIT

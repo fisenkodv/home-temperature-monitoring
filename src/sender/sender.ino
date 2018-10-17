@@ -37,9 +37,9 @@ void loop()
   }
 
   // Compute heat index, must send in temp in Fahrenheit!
-  float heatIndex = dht.computeHeatIndex(fahrenheit, humidity);
+  float heatIndex = dht.convertFtoC(dht.computeHeatIndex(fahrenheit, humidity));
 
   // Send string: device_id:humidity:celsius:fahrenheit:heat_index
-  String payload = String(DEVICEID) + ":" + String(humidity) + ":" + String(celsius) + ":" + String(fahrenheit) + ":" + String(heatIndex);
+  String payload = String(DEVICEID) + ":" + String(humidity) + ":" + String(celsius) + ":" + String(heatIndex);
   Serial.println(payload);
 }
