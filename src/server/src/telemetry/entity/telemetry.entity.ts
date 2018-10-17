@@ -10,11 +10,11 @@ export class Telemetry {
   @JoinColumn({ name: 'device_id' })
   device: Device;
 
-  @Column({ name: 'temperature' })
-  temperature: number;
-
   @Column({ name: 'humidity' })
   humidity: number;
+
+  @Column({ name: 'temperature' })
+  temperature: number;
 
   @Column({ name: 'heat_index' })
   heatIndex: number;

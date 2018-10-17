@@ -1,5 +1,5 @@
 export interface Device {
-  id: string;
+  uuid: string;
   name: string;
   online: boolean;
 }

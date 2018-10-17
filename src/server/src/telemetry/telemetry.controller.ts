@@ -1,5 +1,6 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { CreateTelemetryDto } from './dto/create-telemetry.dto';
+import { Body, Controller, Post } from '@nestjs/common';
+
+import { Telemetry } from './model';
 import { TelemetryService } from './services';
 
 @Controller('api/telemetry')
@@ -7,12 +8,7 @@ export class TelemetryController {
   constructor(private readonly telemetryService: TelemetryService) {}
 
   @Post()
-  public async log(@Body() createTelemetryDto: CreateTelemetryDto) {
-    this.telemetryService.log(
-      createTelemetryDto.deviceId,
-      createTelemetryDto.temperature,
-      createTelemetryDto.humidity,
-      createTelemetryDto.heatIndex,
-    );
+  public log(@Body() telemetry: Telemetry) {
+    this.telemetryService.log(telemetry.deviceUuid, telemetry.humidity, telemetry.temperature, telemetry.heatIndex);
   }
 }
