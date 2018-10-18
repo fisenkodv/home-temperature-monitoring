@@ -13,25 +13,10 @@ export class DeviceService {
     @InjectRepository(entities.Telemetry) private readonly telemetryRepository: Repository<entities.Telemetry>,
   ) {}
 
-  public async exists(deviceUuid: string): Promise<boolean> {
-    return (
-      (await this.deviceRepository.count({
-        where: { uuid: deviceUuid },
-      })) !== 0
-    );
-  }
-
-  public async create(deviceUuid: string, isActive: boolean = true, name: string = 'unknown device'): Promise<number> {
-    let device = <entities.Device>{ uuid: deviceUuid, isActive: isActive, name: name };
-    await this.deviceRepository.save(device);
-    device = await this.deviceRepository.findOne({ where: { uuid: deviceUuid } });
-    return device.id;
-  }
-
   public async get(deviceUuid: string): Promise<models.Device> {
     const device = await this.deviceRepository.findOne({ where: { uuid: deviceUuid } });
 
-    return await this.toModel(device);
+    return device ? await this.toModel(device) : undefined;
   }
 
   public async getId(deviceUuid: string): Promise<number> {

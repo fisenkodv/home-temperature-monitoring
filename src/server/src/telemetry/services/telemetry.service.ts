@@ -12,7 +12,7 @@ export class TelemetryService {
 
   constructor(
     @InjectRepository(entities.Telemetry) private readonly telemetryRepository: Repository<entities.Telemetry>,
-    private readonly deviceService: DeviceService,
+    @InjectRepository(entities.Device) private readonly deviceRepository: Repository<entities.Device>,
   ) {}
 
   public async log(deviceUuid: string, humidity: number, temperature: number, heatIndex: number) {
@@ -34,9 +34,17 @@ export class TelemetryService {
   private async getDeviceId(deviceUuid: string): Promise<number> {
     let id = this.deviceMap.get(deviceUuid);
     if (id === undefined) {
-      id = (await this.deviceService.exists(deviceUuid))
-        ? await this.deviceService.getId(deviceUuid)
-        : await this.deviceService.create(deviceUuid);
+      let device = await this.deviceRepository.findOne({
+        where: { uuid: deviceUuid },
+      });
+
+      if (device) {
+        id = device.id;
+      } else {
+        device = <entities.Device>{ uuid: deviceUuid, isActive: true, name: 'unknown device' };
+        device = await this.deviceRepository.save(device);
+        id = device.id;
+      }
 
       this.deviceMap.set(deviceUuid, id);
     }
