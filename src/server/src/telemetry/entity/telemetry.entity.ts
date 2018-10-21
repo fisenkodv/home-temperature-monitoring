@@ -16,9 +16,6 @@ export class Telemetry {
   @Column({ name: 'temperature' })
   temperature: number;
 
-  @Column({ name: 'heat_index' })
-  heatIndex: number;
-
   @Column({ name: 'time_stamp' })
   timeStamp: Date;
 }

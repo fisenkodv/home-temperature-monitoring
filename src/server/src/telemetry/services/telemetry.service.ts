@@ -4,7 +4,6 @@ import * as moment from 'moment';
 import { Repository } from 'typeorm';
 
 import * as entities from '../entity';
-import { DeviceService } from './device.service';
 
 @Injectable()
 export class TelemetryService {
@@ -21,7 +20,6 @@ export class TelemetryService {
       device: { id: id },
       temperature: temperature,
       humidity: humidity,
-      heatIndex: heatIndex,
       timeStamp: new Date(
         moment()
           .utc()
