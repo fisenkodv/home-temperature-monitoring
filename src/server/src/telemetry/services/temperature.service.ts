@@ -25,7 +25,7 @@ export class TemperatureService {
       heatIndex += adjustment;
     }
 
-    return heatIndex;
+    return this.toCelsius(heatIndex);
   }
 
   private toFahrenheit(celsius: number): number {
