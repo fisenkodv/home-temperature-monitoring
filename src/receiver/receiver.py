@@ -29,12 +29,11 @@ class Receiver(object):
         :param line: string
         """
         data = line.split(":")
-        if len(data) == 5:
+        if len(data) == 3:
             return {
                 "device": int(data[0]),
                 "humidity": float(data[1]),
-                "celsius": float(data[2]),
-                "heatIndex": float(data[3])
+                "celsius": float(data[2])
             }
         else:
             return None
