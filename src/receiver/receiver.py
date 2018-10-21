@@ -31,7 +31,7 @@ class Receiver(object):
         data = line.split(":")
         if len(data) == 3:
             return {
-                "device": int(data[0]),
+                "device": data[0],
                 "humidity": float(data[1]),
                 "celsius": float(data[2])
             }
