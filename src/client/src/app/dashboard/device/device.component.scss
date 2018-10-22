@@ -5,9 +5,23 @@
   display: inline-block;
   border-radius: 50%;
   margin-right: 5px;
+  opacity: 1;
+  animation: 3s ease-in-out infinite fade-in;
 
   &--online {
     background: #008000;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -26,12 +40,12 @@
   }
 
   &__temperature {
-    font-size: 7em;
+    font-size: 5em;
     display: inline-block;
     &::after {
       content: '°';
       font-weight: 100;
-      margin-left: -10px;
+      margin-left: 0px;
       margin-top: -10px;
       position: absolute;
     }
@@ -43,7 +57,7 @@
   }
 
   &__unit {
-    font-size: 5em;
+    font-size: 3em;
     font-weight: 100;
     display: inline-block;
     margin-left: 10px;

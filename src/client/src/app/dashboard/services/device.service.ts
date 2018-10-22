@@ -1,16 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { Device } from '../models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export interface DeviceOverview {
-  id: string;
-  name: string;
-  temperature: number;
-  humidity: number;
-  heatIndex: number;
-}
+import { Device } from '../models';
 
 @Injectable()
 export class DeviceService {

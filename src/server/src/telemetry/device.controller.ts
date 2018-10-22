@@ -9,8 +9,8 @@ export class DeviceController {
 
   @Get(':id')
 
-  get(@Param('id') id: string): Promise<Device> {
-    return this.deviceService.get(id);
+  get(@Param('id') deviceUuid: string): Promise<Device> {
+    return this.deviceService.get(deviceUuid);
   }
 
   @Get()

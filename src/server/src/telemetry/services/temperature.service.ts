@@ -4,24 +4,24 @@ import { Injectable } from '@nestjs/common';
 export class TemperatureService {
   public getHeatIndex(humidity: number, temperature: number): number {
     // https://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
-    temperature = this.toFahrenheit(temperature);
+    const temperatureInFahrenheit = this.toFahrenheit(temperature);
     let heatIndex =
       -42.379 +
-      2.04901523 * temperature +
+      2.04901523 * temperatureInFahrenheit +
       10.14333127 * humidity -
-      0.22475541 * temperature * humidity -
-      0.00683783 * temperature * temperature -
+      0.22475541 * temperatureInFahrenheit * humidity -
+      0.00683783 * temperatureInFahrenheit * temperatureInFahrenheit -
       0.05481717 * humidity * humidity +
-      0.00122874 * temperature * temperature * humidity +
-      0.00085282 * temperature * humidity * humidity -
-      0.00000199 * temperature * temperature * humidity * humidity;
+      0.00122874 * temperatureInFahrenheit * temperatureInFahrenheit * humidity +
+      0.00085282 * temperatureInFahrenheit * humidity * humidity -
+      0.00000199 * temperatureInFahrenheit * temperatureInFahrenheit * humidity * humidity;
 
-    if (humidity < 13 && (temperature > 80 && temperature < 112)) {
-      const adjustment = ((13 - humidity) / 4) * Math.sqrt((17 - Math.abs(temperature - 95)) / 17);
+    if (humidity < 13 && (temperatureInFahrenheit > 80 && temperatureInFahrenheit < 112)) {
+      const adjustment = ((13 - humidity) / 4) * Math.sqrt((17 - Math.abs(temperatureInFahrenheit - 95)) / 17);
       heatIndex -= adjustment;
     }
-    if (humidity > 85 && (temperature > 80 && temperature < 87)) {
-      const adjustment = ((humidity - 85) / 10) * ((87 - temperature) / 5);
+    if (humidity > 85 && (temperatureInFahrenheit > 80 && temperatureInFahrenheit < 87)) {
+      const adjustment = ((humidity - 85) / 10) * ((87 - temperatureInFahrenheit) / 5);
       heatIndex += adjustment;
     }
 

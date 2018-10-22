@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize, tap } from 'rxjs/operators';
 
-import { QuoteService, DeviceService } from '../services';
 import { Device } from '../models';
+import { DeviceService } from '../services';
 
 @Component({
   selector: 'app-devices',
@@ -10,14 +10,10 @@ import { Device } from '../models';
   styleUrls: ['./devices.component.scss'],
 })
 export class DevicesComponent implements OnInit {
-  quote: string;
   isLoading: boolean;
   devices: Device[] = [];
 
-  constructor(
-    private quoteService: QuoteService,
-    private deviceService: DeviceService,
-  ) {}
+  constructor(private deviceService: DeviceService) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -29,16 +25,5 @@ export class DevicesComponent implements OnInit {
         finalize(() => (this.isLoading = false)),
       )
       .subscribe();
-
-    this.quoteService
-      .getRandomQuote({ category: 'dev' })
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-      )
-      .subscribe((quote: string) => {
-        this.quote = quote;
-      });
   }
 }

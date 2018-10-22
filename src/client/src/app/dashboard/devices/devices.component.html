@@ -1,20 +1,11 @@
-<div class="container-fluid">
-  <div class="jumbotron text-center">
-    <h1>
-      <!-- <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo"/> -->
-      <span>Hello world !</span>
-    </h1>
-    <app-loader [isLoading]="isLoading"></app-loader>
-    <q [hidden]="isLoading">{{quote}}</q>
+<div class="container mt-5">
+  <div class="d-flex justify-content-center" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
   </div>
-</div>
 
-<div class="container">
-  <div class="row justify-content-center">
+  <div class="row justify-content-center" *ngIf="!isLoading">
     <div class="col-sm-8 col-md-6 col-lg-4" *ngFor="let device of devices">
       <app-device [device]="device"></app-device>
     </div>
   </div>
-
-
 </div>

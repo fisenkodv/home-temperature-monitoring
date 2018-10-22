@@ -7,7 +7,7 @@ import { SharedModule } from '@app/shared';
 import { DeviceComponent } from './device/device.component';
 import { DevicesComponent } from './devices/devices.component';
 import { HomeRoutingModule } from './home-routing.module';
-import { DeviceService, QuoteService } from './services';
+import { DeviceService, TelemetryService } from './services';
 
 const COMPONENTS = [DevicesComponent, DeviceComponent];
 
@@ -20,6 +20,6 @@ const COMPONENTS = [DevicesComponent, DeviceComponent];
     HomeRoutingModule,
   ],
   declarations: COMPONENTS,
-  providers: [QuoteService, DeviceService],
+  providers: [DeviceService, TelemetryService],
 })
 export class HomeModule {}

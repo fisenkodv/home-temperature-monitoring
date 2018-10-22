@@ -6,5 +6,7 @@
     <p>
       <i class="far fa-bookmark"></i> <span>Version</span> {{version}}
     </p>
+    <app-loader [isLoading]="isLoading"></app-loader>
+    <q [hidden]="isLoading">{{quote}}</q>
   </div>
 </div>
