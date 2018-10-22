@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { DeviceTelemetry } from 'telemetry/model';
-import { MoreThan, Repository } from 'typeorm';
+import { MoreThan, Repository, Equal, Brackets } from 'typeorm';
 
 import * as entities from '../entity';
 import { TemperatureService } from './temperature.service';
@@ -67,21 +67,19 @@ export class TelemetryService {
   }
 
   private async isOnline(entity: entities.Device): Promise<boolean> {
-    const numberOfLogItems = await this.telemetryRepository.count({
-      where: {
-        deviceId: entity.uuid,
-        timeStamp: MoreThan(
-          new Date(
-            moment()
-              .utc()
-              .subtract(1, 'minute')
-              .format(),
-          ),
+    const query = this.telemetryRepository
+      .createQueryBuilder('telemetry')
+      .where('telemetry.device_id = :deviceId', { deviceId: entity.id })
+      .andWhere('telemetry.timeStamp > :timeStamp', {
+        timeStamp: new Date(
+          moment()
+            .utc()
+            .subtract(1, 'minute')
+            .format(),
         ),
-      },
-    });
+      });
 
-    return numberOfLogItems > 0;
+    return (await query.getCount()) > 0;
   }
 
   private async getLatestTelemetry(entity: entities.Device): Promise<entities.Telemetry> {

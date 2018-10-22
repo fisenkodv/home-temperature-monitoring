@@ -8,12 +8,12 @@ export class TelemetryController {
   constructor(private readonly telemetryService: TelemetryService) {}
 
   @Post()
-  public log(@Body() telemetry: CreateTelemetry) {
+  public create(@Body() telemetry: CreateTelemetry) {
     this.telemetryService.logTelemetry(telemetry.deviceUuid, telemetry.humidity, telemetry.temperature);
   }
 
   @Get(':id')
-  get(@Param('id') deviceUuid: string): Promise<DeviceTelemetry> {
+  public get(@Param('id') deviceUuid: string): Promise<DeviceTelemetry> {
     return this.telemetryService.getDeviceTelemetry(deviceUuid);
   }
 }

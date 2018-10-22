@@ -1,9 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, timer, EMPTY } from 'rxjs';
+import { takeUntil, catchError, tap } from 'rxjs/operators';
 
 import { Device, DeviceTelemetry } from '../models';
 import { TelemetryService } from '../services';
+import { Logger } from '@app/core';
+
+const logger = new Logger('Device');
 
 @Component({
   selector: 'app-device',
@@ -29,10 +32,19 @@ export class DeviceComponent implements OnInit, OnDestroy {
     source.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
       this.telemetryService
         .getDeviceTelemetry(this.device.uuid)
-        .subscribe(result => {
-          this.telemetry = result;
-          this.loading = false;
-        });
+        .pipe(
+          tap(result => {
+            this.telemetry = result;
+            this.loading = false;
+          }),
+          catchError(error => {
+            logger.error(
+              `Unable to retrieve telemetry data from: ${this.device.uuid}`,
+            );
+            return EMPTY;
+          }),
+        )
+        .subscribe();
     });
   }
 
