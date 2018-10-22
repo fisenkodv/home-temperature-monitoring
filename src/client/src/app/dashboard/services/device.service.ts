@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Device } from '../models';
 
 export interface DeviceOverview {
   id: string;
@@ -12,16 +13,10 @@ export interface DeviceOverview {
 }
 
 @Injectable()
-export class TemperatureService {
+export class DeviceService {
   constructor(private httpClient: HttpClient) {}
 
-  getRandomQuote(): Observable<string> {
-    return this.httpClient
-      .cache(true)
-      .get('')
-      .pipe(
-        map((body: any) => body.value),
-        catchError(() => of('Error, could not load joke :-(')),
-      );
+  getAll(): Observable<Device[]> {
+    return this.httpClient.get<Device[]>('/device/');
   }
 }

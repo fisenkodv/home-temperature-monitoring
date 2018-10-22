@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Res } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { Device } from './model';
 import { DeviceService } from './services';
@@ -9,7 +9,7 @@ export class DeviceController {
 
   @Get(':id')
 
-  get(@Param('id') id: string, @Res() res: Response): Promise<Device> {
+  get(@Param('id') id: string): Promise<Device> {
     return this.deviceService.get(id);
   }
 

@@ -4,16 +4,22 @@ import { CoreModule } from '@app/core';
 import { MaterialModule } from '@app/material.module';
 import { SharedModule } from '@app/shared';
 
+import { DeviceComponent } from './device/device.component';
+import { DevicesComponent } from './devices/devices.component';
 import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home/home.component';
-import { RoomCardComponent } from './room-card/room-card.component';
-import { QuoteService } from './services';
+import { DeviceService, QuoteService } from './services';
 
-const COMPONENTS = [HomeComponent, RoomCardComponent, RoomCardComponent];
+const COMPONENTS = [DevicesComponent, DeviceComponent];
 
 @NgModule({
-  imports: [CommonModule, CoreModule, SharedModule, MaterialModule, HomeRoutingModule],
+  imports: [
+    CommonModule,
+    CoreModule,
+    SharedModule,
+    MaterialModule,
+    HomeRoutingModule,
+  ],
   declarations: COMPONENTS,
-  providers: [QuoteService],
+  providers: [QuoteService, DeviceService],
 })
 export class HomeModule {}
