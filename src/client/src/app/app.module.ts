@@ -13,7 +13,7 @@ import { environment } from '@env/environment';
 import { AboutModule } from './about/about.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeModule } from './dashboard/home.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { MaterialModule } from './material.module';
 import { ShellModule } from './shell/shell.module';
 
@@ -30,7 +30,7 @@ import { ShellModule } from './shell/shell.module';
     CoreModule,
     SharedModule,
     ShellModule,
-    HomeModule,
+    DashboardModule,
     AboutModule,
     AppRoutingModule,
   ],

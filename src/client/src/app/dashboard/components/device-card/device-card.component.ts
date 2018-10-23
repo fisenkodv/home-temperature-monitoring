@@ -2,18 +2,18 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, timer, EMPTY } from 'rxjs';
 import { takeUntil, catchError, tap } from 'rxjs/operators';
 
-import { Device, DeviceTelemetry } from '../models';
-import { TelemetryService } from '../services';
+import { Device, DeviceTelemetry } from '../../models';
+import { TelemetryService } from '../../services';
 import { Logger } from '@app/core';
 
 const logger = new Logger('Device');
 
 @Component({
-  selector: 'app-device',
-  templateUrl: './device.component.html',
-  styleUrls: ['./device.component.scss'],
+  selector: 'app-device-card',
+  templateUrl: './device-card.component.html',
+  styleUrls: ['./device-card.component.scss'],
 })
-export class DeviceComponent implements OnInit, OnDestroy {
+export class DeviceCardComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
 
   loading: boolean;

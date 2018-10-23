@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize, tap } from 'rxjs/operators';
 
-import { Device } from '../models';
-import { DeviceService } from '../services';
+import { Device } from '../../models';
+import { DeviceService } from '../../services';
 
 @Component({
-  selector: 'app-devices',
-  templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.scss'],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
 })
-export class DevicesComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   isLoading: boolean;
   devices: Device[] = [];
 
