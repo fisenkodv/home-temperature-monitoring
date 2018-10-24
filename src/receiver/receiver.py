@@ -3,6 +3,8 @@
 import argparse
 import time
 import serial
+import urllib.request
+import json
 
 
 class Receiver(object):
@@ -22,7 +24,7 @@ class Receiver(object):
             line = str(serialConfig.readline())[2:-5]
             data = self.parse(line)
             if data != None:
-                print(data)
+                self.send_data(data)
 
     def parse(self, line):
         """
@@ -31,12 +33,21 @@ class Receiver(object):
         data = line.split(":")
         if len(data) == 3:
             return {
-                "device": data[0],
+                "deviceUuid": data[0],
                 "humidity": float(data[1]),
-                "celsius": float(data[2])
+                "temperature": float(data[2])
             }
         else:
             return None
+
+    def send_data(self, data):
+        request = urllib.request.Request(self.url)
+        request.add_header('Content-Type', 'application/json; charset=utf-8')
+        json_data = json.dumps(data)
+        json_data_as_bytes = json_data.encode('utf-8')
+        request.add_header('Content-Length', len(json_data_as_bytes))
+        print(json_data_as_bytes)
+        urllib.request.urlopen(request, json_data_as_bytes)
 
 
 if __name__ == '__main__':

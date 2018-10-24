@@ -3,7 +3,7 @@ import { Body, Controller, Post, Get, Param } from '@nestjs/common';
 import { CreateTelemetry, DeviceTelemetry } from './model';
 import { TelemetryService } from './services';
 
-@Controller('api/telemetry')
+@Controller('/api/telemetry')
 export class TelemetryController {
   constructor(private readonly telemetryService: TelemetryService) {}
 

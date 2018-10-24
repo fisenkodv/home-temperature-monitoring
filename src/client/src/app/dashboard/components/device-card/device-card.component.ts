@@ -28,7 +28,7 @@ export class DeviceCardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
 
-    const source = timer(0, 2000);
+    const source = timer(0, 8000);
     source.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
       this.telemetryService
         .getDeviceTelemetry(this.device.uuid)

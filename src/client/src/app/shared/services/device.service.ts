@@ -9,6 +9,6 @@ export class DeviceService {
   constructor(private httpClient: HttpClient) {}
 
   getAll(): Observable<Device[]> {
-    return this.httpClient.get<Device[]>('/device/');
+    return this.httpClient.get<Device[]>('/device');
   }
 }

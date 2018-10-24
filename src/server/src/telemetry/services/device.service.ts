@@ -7,9 +7,7 @@ import * as models from '../model';
 
 @Injectable()
 export class DeviceService {
-  constructor(
-    @InjectRepository(entities.Device) private readonly deviceRepository: Repository<entities.Device>,
-  ) {}
+  constructor(@InjectRepository(entities.Device) private readonly deviceRepository: Repository<entities.Device>) {}
 
   public async get(deviceUuid: string): Promise<models.Device> {
     const device = await this.deviceRepository.findOne({ where: { uuid: deviceUuid } });
