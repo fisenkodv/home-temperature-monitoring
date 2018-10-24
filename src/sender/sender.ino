@@ -14,7 +14,7 @@ void setup()
 void loop()
 {
   // Enter power down state for 8 s with ADC and BOD module disabled
-  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
+  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);  
 
   uint32_t start = micros();
   int chk = DHT.read22(DHT22_PIN);
@@ -25,6 +25,6 @@ void loop()
     // Send string: device_id:humidity:temperature
     String payload = String(DEVICE_ID) + ":" + String(DHT.humidity) + ":" + String(DHT.temperature);
     Serial.println(payload);
-    Serial.flush();
+   Serial.flush();
   }
 }
