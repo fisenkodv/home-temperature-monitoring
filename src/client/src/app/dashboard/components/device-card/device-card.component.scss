@@ -1,15 +1,18 @@
 .status {
-  background: #ff0000;
   width: 15px;
   height: 15px;
   display: inline-block;
   border-radius: 50%;
   margin-right: 5px;
   opacity: 1;
-  animation: 3s ease-in-out infinite fade-in;
 
   &--online {
     background: #008000;
+  }
+
+  &--offline {
+    background: #ff0000;
+    animation: 3s ease-in-out infinite fade-in;
   }
 }
 

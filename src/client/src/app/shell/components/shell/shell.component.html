@@ -1,9 +1,9 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [mode]="'over'">
+  <mat-sidenav #drawer class="sidenav-panel " fixedInViewport="true" [mode]="'over'">
     <mat-toolbar color="warm">Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard">Dashboard</a>
-      <a mat-list-item routerLink="/about">About</a>
+      <a mat-list-item (click)="drawer.close()" routerLink="/dashboard">Dashboard</a>
+      <a mat-list-item (click)="drawer.close()" routerLink="/about">About</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

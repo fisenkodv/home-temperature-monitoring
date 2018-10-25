@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
-import { TelemetryModule } from './telemetry/telemetry.module';
+import { TelemetryModule } from '../telemetry/telemetry.module';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -14,8 +15,8 @@ import { TelemetryModule } from './telemetry/telemetry.module';
       username: 'monitoring',
       password: 'RXPzUvp3Bgm78oBx',
       database: 'monitoring',
-      synchronize: true,
-      entities: [__dirname + '/**/**.entity{.ts,.js}'],
+      synchronize: false,
+      entities: [path.resolve(path.join(__dirname, '..', '/**/**.entity{.ts,.js}'))],
       migrations: [__dirname + '/migration/**/*.ts'],
       subscribers: [__dirname + '/subscriber/**/*.ts'],
       logging: ['error'],

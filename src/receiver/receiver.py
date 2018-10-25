@@ -41,14 +41,15 @@ class Receiver(object):
             return None
 
     def send_data(self, data):
-        request = urllib.request.Request(self.url)
-        request.add_header('Content-Type', 'application/json; charset=utf-8')
-        json_data = json.dumps(data)
-        json_data_as_bytes = json_data.encode('utf-8')
-        request.add_header('Content-Length', len(json_data_as_bytes))
-        print(json_data_as_bytes)
-        urllib.request.urlopen(request, json_data_as_bytes)
-
+        try:
+            request = urllib.request.Request(self.url)
+            request.add_header('Content-Type', 'application/json; charset=utf-8')
+            json_data = json.dumps(data)
+            json_data_as_bytes = json_data.encode('utf-8')
+            request.add_header('Content-Length', len(json_data_as_bytes))
+            urllib.request.urlopen(request, json_data_as_bytes)
+        except:
+            print("Error occurred:", sys.exc_info()[0])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Temperature data receiver.')

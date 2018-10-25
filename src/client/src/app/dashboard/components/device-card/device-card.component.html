@@ -1,7 +1,7 @@
 <mat-card class="mb-3">
   <mat-card-header>
     <mat-card-title class="align-items-center d-flex">
-      <span class="status" [ngClass]="{'status--online': telemetry.online}" *ngIf="!loading"></span>
+      <span class="status" [ngClass]="{'status--online': telemetry.online, 'status--offline': !telemetry.online}" *ngIf="!loading"></span>
       {{device.name}}
     </mat-card-title>
   </mat-card-header>

@@ -4,7 +4,7 @@
   </div>
 
   <div class="row justify-content-center" *ngIf="!isLoading">
-    <div class="col-sm-8 col-md-6 col-lg-4" *ngFor="let device of devices">
+    <div class="col-sm-10 col-md-6 col-lg-6 col-xl-4" *ngFor="let device of devices">
       <app-device-card [device]="device"></app-device-card>
     </div>
   </div>

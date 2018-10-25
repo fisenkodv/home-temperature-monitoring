@@ -1,9 +1,7 @@
+@import '~bootstrap/scss/bootstrap-grid';
+
 .sidenav-container {
   height: 100%;
-}
-
-.sidenav {
-  width: 20%;
 }
 
 .mat-toolbar {
@@ -11,5 +9,23 @@
     position: sticky;
     top: 0;
     z-index: 100;
+  }
+}
+
+@include media-breakpoint-up(xs) {
+  .sidenav-panel {
+    width: 100% !important;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .sidenav-panel {
+    width: 30% !important;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .sidenav-panel {
+    width: 20% !important;
   }
 }
