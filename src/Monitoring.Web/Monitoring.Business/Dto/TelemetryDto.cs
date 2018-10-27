@@ -25,7 +25,7 @@ namespace Monitoring.Business.Dto
       return telemetry != null
         ? new TelemetryDto
         {
-          Online = telemetry.TimeStamp > DateTime.UtcNow.AddMinutes(-1),
+          Online = telemetry.TimeStamp.ToUniversalTime() > DateTime.UtcNow.AddMinutes(-1),
           Temperature = telemetry.Temperature,
           Humidity = telemetry.Humidity,
           HeatIndex = TemperatureHelper.GetHeatIndex(telemetry.Temperature, telemetry.Humidity)

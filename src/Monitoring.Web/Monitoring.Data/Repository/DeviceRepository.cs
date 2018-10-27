@@ -22,7 +22,7 @@ namespace Monitoring.Data.Repository
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
-        const string query = "SELECT `id`, `uuid`, `name`, `is_active` FROM `device` WHERE `uuid` = @DeviceId";
+        const string query = "SELECT id, uuid, name, is_active FROM device WHERE uuid = @DeviceId";
         return await connection.QueryFirstOrDefaultAsync<Device>(query, new {DeviceId = deviceId});
       }
     }
@@ -31,7 +31,7 @@ namespace Monitoring.Data.Repository
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
-        const string query = "SELECT `id`, `uuid`, `name`, `is_active` FROM `device`";
+        const string query = "SELECT id, uuid, name, is_active FROM device";
         return await connection.QueryAsync<Device>(query);
       }
     }
@@ -41,7 +41,7 @@ namespace Monitoring.Data.Repository
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
         const string query = @"
-          INSERT INTO `device` (`uuid`, `name`, `is_active`) VALUES(@DeviceId, @Name, @IsActive); 
+          INSERT INTO device (uuid, name, is_active) VALUES(@DeviceId, @Name, @IsActive); 
           SELECT LAST_INSERT_ID();";
 
         return await connection.ExecuteScalarAsync<int>(query,

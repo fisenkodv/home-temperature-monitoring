@@ -16,9 +16,17 @@ namespace Monitoring.Data.Repository
       _configuration = configuration;
     }
 
-    public Task Create(float temperature, float humidity, int deviceId, DateTime utcNow)
+    public async Task Create(float temperature, float humidity, int deviceId, DateTime timeStamp)
     {
-      throw new NotImplementedException();
+      using (var connection = ConnectionHelper.GetConnection(_configuration))
+      {
+        const string query = @"
+          INSERT INTO telemetry(humidity, temperature, time_stamp, device_id) 
+          VALUES (@Humidity, @Temperature, @TimeStamp, @DeviceId)";
+
+        await connection.ExecuteAsync(query,
+          new {Humidity = humidity, Temperature = temperature, TimeStamp = timeStamp, DeviceId = deviceId});
+      }
     }
 
     public async Task<Telemetry> GetLatestTelemetry(string deviceId)

@@ -33,7 +33,7 @@ class Receiver(object):
         data = line.split(":")
         if len(data) == 3:
             return {
-                "deviceUuid": data[0],
+                "device_uuid": data[0],
                 "humidity": float(data[1]),
                 "temperature": float(data[2])
             }

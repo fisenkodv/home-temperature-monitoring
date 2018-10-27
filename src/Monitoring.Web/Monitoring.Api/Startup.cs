@@ -13,6 +13,7 @@ namespace Monitoring.Api
     {
       services.AddMvc();
       services.AddCustomServices();
+      services.AddSpaStaticFiles(configuration => configuration.RootPath = "wwwroot/");
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -23,8 +24,29 @@ namespace Monitoring.Api
         app.UseDeveloperExceptionPage();
       }
 
-      //app.UseSpaStaticFiles();
-      app.UseMvcWithDefaultRoute();
+      app.UseStaticFiles();
+      app.UseSpaStaticFiles();
+
+      //app.UseMvcWithDefaultRoute();
+      
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+          name: "default",
+          template: "{controller}/{action=Index}/{id?}");
+      });
+
+      app.UseSpa(spa =>
+      {
+        // To learn more about options for serving an Angular SPA from ASP.NET Core,
+        // see https://go.microsoft.com/fwlink/?linkid=864501
+        spa.Options.SourcePath = "wwwroot";
+
+        if (env.IsDevelopment())
+        {
+          spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+        }
+      });
     }
   }
 }
