@@ -35,11 +35,10 @@ namespace Monitoring.Data.Repository
       {
         const string query = @"
           SELECT
-            telemetry.id,
-            telemetry.humidity,
-            telemetry.temperature,
-            telemetry.time_stamp,
-            device_id
+            telemetry.id AS Id,
+            telemetry.humidity AS Humidity,
+            telemetry.temperature AS Temperature,
+            telemetry.time_stamp AS TimeStamp
           FROM telemetry 
           INNER JOIN device ON device.id=telemetry.device_id
           WHERE device.uuid=@DeviceId
