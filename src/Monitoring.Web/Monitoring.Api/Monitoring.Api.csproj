@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations">
+          <Version>2018.2.1</Version>
+        </PackageReference>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Monitoring.Business\Monitoring.Business.csproj" />
+      <ProjectReference Include="..\Monitoring.Data\Monitoring.Data.csproj" />
+    </ItemGroup>
+
+</Project>

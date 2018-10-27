@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Api", "Monitoring.Api\Monitoring.Api.csproj", "{FECB28E0-E83A-432C-A562-702E1B13032E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Data", "Monitoring.Data\Monitoring.Data.csproj", "{EDA0B427-584D-4194-8008-DED48C2CE33A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Business", "Monitoring.Business\Monitoring.Business.csproj", "{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FECB28E0-E83A-432C-A562-702E1B13032E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FECB28E0-E83A-432C-A562-702E1B13032E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FECB28E0-E83A-432C-A562-702E1B13032E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FECB28E0-E83A-432C-A562-702E1B13032E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDA0B427-584D-4194-8008-DED48C2CE33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDA0B427-584D-4194-8008-DED48C2CE33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDA0B427-584D-4194-8008-DED48C2CE33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDA0B427-584D-4194-8008-DED48C2CE33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
