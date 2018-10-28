@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Monitoring.Business.Abstract.Repository;
@@ -32,6 +34,14 @@ namespace Monitoring.Business.Service
     public async Task<Measurement> GetLatestMeasurement(string deviceUuid)
     {
       return await _measurementRepository.GetLatestMeasurement(deviceUuid);
+    }
+
+    public async Task<IEnumerable<Measurement>> GetMeasurements(string deviceUuid, int hours)
+    {
+      if (hours > 24 * 31)
+        return Enumerable.Empty<Measurement>();
+      
+      return await _measurementRepository.GetMeasurements(deviceUuid, hours);
     }
   }
 }

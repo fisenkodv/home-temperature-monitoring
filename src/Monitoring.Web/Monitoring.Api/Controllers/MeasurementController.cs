@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Monitoring.Business.Dto;
@@ -21,11 +23,18 @@ namespace Monitoring.Api.Controllers
       return _measurementService.CreateMeasurement(dto.DeviceUuid, dto.Temperature, dto.Humidity);
     }
 
+    [HttpGet("{deviceUuid}/{hours}")]
+    public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, int hours)
+    {
+      var measurements = await _measurementService.GetMeasurements(deviceUuid, hours);
+      return measurements.Select(MeasurementDto.FromModel);
+    }
+
     [HttpGet("{deviceUuid}")]
     public async Task<MeasurementDto> GetLatestMeasurement(string deviceUuid)
     {
-      var telemetry = await _measurementService.GetLatestMeasurement(deviceUuid);
-      return MeasurementDto.FromModel(telemetry);
+      var measurement = await _measurementService.GetLatestMeasurement(deviceUuid);
+      return MeasurementDto.FromModel(measurement);
     }
   }
 }

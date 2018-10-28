@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +51,24 @@ namespace Monitoring.Data.Repository
           LIMIT 1";
 
         return await connection.QueryFirstOrDefaultAsync<Measurement>(query, new {DeviceUuid = deviceUuid});
+      }
+    }
+
+    public async Task<IEnumerable<Measurement>> GetMeasurements(string deviceUuid, int hours)
+    {
+      using (var connection = ConnectionHelper.GetConnection(_configuration))
+      {
+        const string query = @"
+          SELECT
+            measurements.humidity AS Humidity,
+            measurements.temperature AS Temperature,
+            measurements.time_stamp AS TimeStamp
+          FROM measurements 
+          INNER JOIN devices ON devices.id=measurements.device_id
+          WHERE devices.uuid=@DeviceUuid AND measurements.time_stamp > DATE_SUB(CURDATE(),INTERVAL @Hours HOUR) 
+          ORDER BY measurements.time_stamp DESC";
+
+        return await connection.QueryAsync<Measurement>(query, new {DeviceUuid = deviceUuid, Hours = hours});
       }
     }
   }
