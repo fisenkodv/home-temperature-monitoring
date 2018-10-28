@@ -7,11 +7,11 @@ using Monitoring.Business.Model;
 
 namespace Monitoring.Data.Repository
 {
-  public class TelemetryRepository : ITelemetryRepository
+  public class MeasurementRepository : IMeasurementRepository
   {
     private readonly IConfiguration _configuration;
 
-    public TelemetryRepository(IConfiguration configuration)
+    public MeasurementRepository(IConfiguration configuration)
     {
       _configuration = configuration;
     }
@@ -29,7 +29,7 @@ namespace Monitoring.Data.Repository
       }
     }
 
-    public async Task<Telemetry> GetLatestTelemetry(string deviceId)
+    public async Task<Telemetry> GetLatestMeasurement(string deviceId)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {

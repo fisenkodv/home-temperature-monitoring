@@ -7,6 +7,6 @@ namespace Monitoring.Business.Abstract.Repository
   public interface ITelemetryRepository
   {
     Task Create(float temperature, float humidity, int deviceId, DateTime utcNow);
-    Task<Telemetry> GetLatestTelemetry(string deviceId);
+    Task<Telemetry> GetLatestMeasurement(string deviceId);
   }
 }
