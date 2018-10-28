@@ -42,7 +42,7 @@ export class DeviceCardComponent implements OnInit, OnDestroy {
           }),
           catchError(error => {
             logger.error(
-              `Unable to retrieve telemetry data from: ${this.device.uuid}`,
+              `Unable to retrieve measurement data from: ${this.device.uuid}`,
             );
             return EMPTY;
           }),

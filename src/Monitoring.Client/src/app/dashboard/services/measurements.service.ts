@@ -11,4 +11,13 @@ export class MeasurementsService {
   getLatestMeasurement(deviceUuid: string): Observable<MeasurementDto> {
     return this.httpClient.get<MeasurementDto>(`/measurements/${deviceUuid}`);
   }
+
+  getMeasurements(
+    deviceUuid: string,
+    hours: number,
+  ): Observable<MeasurementDto[]> {
+    return this.httpClient.get<MeasurementDto[]>(
+      `/measurements/${deviceUuid}/${hours}`,
+    );
+  }
 }

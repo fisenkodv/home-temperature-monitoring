@@ -1,6 +1,7 @@
 <ngx-charts-line-chart 
+  class="chart-container d-flex justify-content-center"
   [schemeType]="'ordinal'" 
-  [results]="data" 
+  [results]="getData()" 
   [animations]="true" 
   [legend]="true"
   [legendTitle]="'Legend'"
@@ -19,5 +20,6 @@
   [timeline]="false" 
   [showGridLines]="true" 
   [rangeFillOpacity]="0.15"
+  [view]="view"
   [roundDomains]="false" [tooltipDisabled]="false">
 </ngx-charts-line-chart>
