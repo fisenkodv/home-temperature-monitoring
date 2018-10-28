@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Monitoring.Business.Dto
 {
   [PublicAPI]
-  public class CreateTelemetryDto
+  public class CreateMeasurementDto
   {
     [JsonProperty("device_uuid")]
     public string DeviceUuid { get; set; }

@@ -7,7 +7,7 @@ import { SharedModule } from '@app/shared';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DeviceCardComponent } from './components/device-card/device-card.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { TelemetryService } from './services';
+import { MeasurementsService } from './services';
 
 const COMPONENTS = [DashboardComponent, DeviceCardComponent];
 
@@ -20,6 +20,6 @@ const COMPONENTS = [DashboardComponent, DeviceCardComponent];
     DashboardRoutingModule,
   ],
   declarations: COMPONENTS,
-  providers: [TelemetryService],
+  providers: [MeasurementsService],
 })
 export class DashboardModule {}

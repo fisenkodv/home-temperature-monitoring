@@ -7,32 +7,31 @@ using Monitoring.Business.Model;
 namespace Monitoring.Business.Service
 {
   [UsedImplicitly]
-  public class TelemetryService
+  public class MeasurementService
   {
-    private readonly ITelemetryRepository _telemetryRepository;
+    private readonly IMeasurementRepository _measurementRepository;
     private readonly IDeviceRepository _deviceRepository;
 
-    public TelemetryService(ITelemetryRepository telemetryRepository, IDeviceRepository deviceRepository)
+    public MeasurementService(IMeasurementRepository measurementRepository, IDeviceRepository deviceRepository)
     {
-      _telemetryRepository = telemetryRepository;
+      _measurementRepository = measurementRepository;
       _deviceRepository = deviceRepository;
     }
 
-    public async Task LogTelemetry(string deviceId, float temperature, float humidity)
+    public async Task CreateMeasurement(string deviceUuid, float temperature, float humidity)
     {
-      var device = await _deviceRepository.GetByDeviceId(deviceId);
+      var device = await _deviceRepository.GetDevice(deviceUuid);
       if (device == null)
       {
-        var id = await _deviceRepository.Create(deviceId, "unknown device", true);
-        device = new Device {Id = id};
+        await _deviceRepository.CreateDevice(deviceUuid, "unknown device", true);
       }
 
-      await _telemetryRepository.Create(temperature, humidity, device.Id, DateTime.UtcNow);
+      await _measurementRepository.CreateMeasurement(temperature, humidity, deviceUuid, DateTime.UtcNow);
     }
 
-    public async Task<Telemetry> GetTelemetry(string deviceId)
+    public async Task<Measurement> GetLatestMeasurement(string deviceUuid)
     {
-      return await _telemetryRepository.GetLatestTelemetry(deviceId);
+      return await _measurementRepository.GetLatestMeasurement(deviceUuid);
     }
   }
 }

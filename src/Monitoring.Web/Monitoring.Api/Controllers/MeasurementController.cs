@@ -5,26 +5,27 @@ using Monitoring.Business.Service;
 
 namespace Monitoring.Api.Controllers
 {
-  [Route("api/telemetry")]
-  public class TelemetryController : Controller
+  [Route("api/measurements")]
+  public class MeasurementController : Controller
   {
-    private readonly TelemetryService _telemetryService;
+    private readonly MeasurementService _measurementService;
 
-    public TelemetryController(TelemetryService telemetryService)
+    public MeasurementController(MeasurementService measurementService)
     {
-      _telemetryService = telemetryService;
+      _measurementService = measurementService;
     }
 
-    public Task Create([FromBody] CreateTelemetryDto dto)
+    [HttpPost]
+    public Task Create([FromBody] CreateMeasurementDto dto)
     {
-      return _telemetryService.LogTelemetry(dto.DeviceUuid, dto.Temperature, dto.Humidity);
+      return _measurementService.CreateMeasurement(dto.DeviceUuid, dto.Temperature, dto.Humidity);
     }
 
-    [HttpGet("{deviceId}")]
-    public async Task<TelemetryDto> Get(string deviceId)
+    [HttpGet("{deviceUuid}")]
+    public async Task<MeasurementDto> GetLatestMeasurement(string deviceUuid)
     {
-      var telemetry = await _telemetryService.GetTelemetry(deviceId);
-      return TelemetryDto.FromModel(telemetry);
+      var telemetry = await _measurementService.GetLatestMeasurement(deviceUuid);
+      return MeasurementDto.FromModel(telemetry);
     }
   }
 }

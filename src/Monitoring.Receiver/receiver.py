@@ -48,8 +48,8 @@ class Receiver(object):
             json_data_as_bytes = json_data.encode('utf-8')
             request.add_header('Content-Length', len(json_data_as_bytes))
             urllib.request.urlopen(request, json_data_as_bytes)
-        except:
-            print("Error occurred:", sys.exc_info()[0])
+        except Exception as exception:
+            print("Error occurred:", exception.args)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Temperature data receiver.')

@@ -16,12 +16,17 @@ namespace Monitoring.Data.Repository
       _configuration = configuration;
     }
 
-    public async Task Create(float temperature, float humidity, int deviceId, DateTime timeStamp)
+    public async Task CreateMeasurement(float temperature, float humidity, string deviceUuid, DateTime timeStamp)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
+        const string getDeviceIdQuery = @"
+          SELECT id FROM devices WHERE uuid=@DeviceUuid";
+
+        var deviceId = await connection.QuerySingleAsync<int>(getDeviceIdQuery, new {DeviceUuid = deviceUuid});
+
         const string query = @"
-          INSERT INTO telemetry(humidity, temperature, time_stamp, device_id) 
+          INSERT INTO measurements(humidity, temperature, time_stamp, device_id) 
           VALUES (@Humidity, @Temperature, @TimeStamp, @DeviceId)";
 
         await connection.ExecuteAsync(query,
@@ -29,23 +34,22 @@ namespace Monitoring.Data.Repository
       }
     }
 
-    public async Task<Telemetry> GetLatestMeasurement(string deviceId)
+    public async Task<Measurement> GetLatestMeasurement(string deviceUuid)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
         const string query = @"
           SELECT
-            telemetry.id AS Id,
-            telemetry.humidity AS Humidity,
-            telemetry.temperature AS Temperature,
-            telemetry.time_stamp AS TimeStamp
-          FROM telemetry 
-          INNER JOIN device ON device.id=telemetry.device_id
-          WHERE device.uuid=@DeviceId
-          ORDER BY telemetry.time_stamp DESC
+            measurements.humidity AS Humidity,
+            measurements.temperature AS Temperature,
+            measurements.time_stamp AS TimeStamp
+          FROM measurements 
+          INNER JOIN devices ON devices.id=measurements.device_id
+          WHERE devices.uuid=@DeviceUuid
+          ORDER BY measurements.time_stamp DESC
           LIMIT 1";
 
-        return await connection.QueryFirstOrDefaultAsync<Telemetry>(query, new {DeviceId = deviceId});
+        return await connection.QueryFirstOrDefaultAsync<Measurement>(query, new {DeviceUuid = deviceUuid});
       }
     }
   }

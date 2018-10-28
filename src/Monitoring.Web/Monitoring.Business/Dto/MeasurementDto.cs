@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using Monitoring.Business.Model;
 using Newtonsoft.Json;
@@ -16,14 +17,18 @@ namespace Monitoring.Business.Dto
     [JsonProperty("heat_index")]
     public double HeatIndex { get; set; }
 
-    public static MeasurementDto FromModel(Telemetry telemetry)
+    [JsonProperty("time_stamp")]
+    public DateTime TimeStamp { get; set; }
+
+    public static MeasurementDto FromModel(Measurement measurement)
     {
-      return telemetry != null
+      return measurement != null
         ? new MeasurementDto
         {
-          Temperature = telemetry.Temperature,
-          Humidity = telemetry.Humidity,
-          HeatIndex = TemperatureHelper.GetHeatIndex(telemetry.Temperature, telemetry.Humidity)
+          Temperature = measurement.Temperature,
+          Humidity = measurement.Humidity,
+          HeatIndex = TemperatureHelper.GetHeatIndex(measurement.Temperature, measurement.Humidity),
+          TimeStamp = DateTime.SpecifyKind(measurement.TimeStamp, DateTimeKind.Utc)
         }
         : null;
     }

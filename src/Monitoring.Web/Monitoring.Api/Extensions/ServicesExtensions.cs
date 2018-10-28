@@ -10,10 +10,10 @@ namespace Monitoring.Api.Extensions
     public static IServiceCollection AddCustomServices(this IServiceCollection services)
     {
       services.AddScoped<IDeviceRepository, DeviceRepository>();
-      services.AddScoped<ITelemetryRepository, TelemetryRepository>();
+      services.AddScoped<IMeasurementRepository, MeasurementRepository>();
 
       services.AddTransient<DeviceService>();
-      services.AddTransient<TelemetryService>();
+      services.AddTransient<MeasurementService>();
 
       return services;
     }

@@ -18,36 +18,36 @@ namespace Monitoring.Data.Repository
       _configuration = configuration;
     }
 
-    public async Task<Device> GetByDeviceId(string deviceId)
+    public async Task<IEnumerable<Device>> GetDevices()
+    {
+      using (var connection = ConnectionHelper.GetConnection(_configuration))
+      {
+        const string query = "SELECT id AS Id, uuid AS Uuid, name AS Name, is_active AS IsActive FROM devices";
+        return await connection.QueryAsync<Device>(query);
+      }
+    }
+
+    public async Task<Device> GetDevice(string deviceUuid)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
         const string query = @"
           SELECT id AS Id, uuid AS Uuid, name AS Name, is_active AS IsActive
-          FROM device WHERE uuid = @DeviceId";
-        return await connection.QueryFirstOrDefaultAsync<Device>(query, new {DeviceId = deviceId});
+          FROM devices WHERE uuid = @DeviceUuid";
+        return await connection.QueryFirstOrDefaultAsync<Device>(query, new {DeviceUuid = deviceUuid});
       }
     }
 
-    public async Task<IEnumerable<Device>> GetAll()
-    {
-      using (var connection = ConnectionHelper.GetConnection(_configuration))
-      {
-        const string query = "SELECT id AS Id, uuid AS Uuid, name AS Name, is_active AS IsActive FROM device";
-        return await connection.QueryAsync<Device>(query);
-      }
-    }
-
-    public async Task<int> Create(string deviceId, string name, bool isActive)
+    public async Task<int> CreateDevice(string deviceUuid, string name, bool isActive)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
         const string query = @"
-          INSERT INTO device (uuid, name, is_active) VALUES(@DeviceId, @Name, @IsActive); 
+          INSERT INTO devices (uuid, name, is_active) VALUES(@DeviceUuid, @Name, @IsActive); 
           SELECT LAST_INSERT_ID();";
 
         return await connection.ExecuteScalarAsync<int>(query,
-          new {DeviceId = deviceId, Name = name, IsActive = isActive});
+          new {DeviceUuid = deviceUuid, Name = name, IsActive = isActive});
       }
     }
   }

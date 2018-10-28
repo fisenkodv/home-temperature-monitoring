@@ -4,9 +4,9 @@ using Monitoring.Business.Model;
 
 namespace Monitoring.Business.Abstract.Repository
 {
-  public interface ITelemetryRepository
+  public interface IMeasurementRepository
   {
-    Task Create(float temperature, float humidity, int deviceId, DateTime utcNow);
-    Task<Telemetry> GetLatestMeasurement(string deviceId);
+    Task CreateMeasurement(float temperature, float humidity, string deviceUuid, DateTime utcNow);
+    Task<Measurement> GetLatestMeasurement(string deviceUuid);
   }
 }

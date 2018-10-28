@@ -6,8 +6,8 @@ namespace Monitoring.Business.Abstract.Repository
 {
   public interface IDeviceRepository
   {
-    Task<Device> GetByDeviceId(string deviceId);
-    Task<IEnumerable<Device>> GetAll();
-    Task<int> Create(string deviceId, string name, bool isActive);
+    Task<IEnumerable<Device>> GetDevices();
+    Task<Device> GetDevice(string deviceUuid);
+    Task<int> CreateDevice(string deviceUuid, string name, bool isActive);
   }
 }

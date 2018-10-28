@@ -16,14 +16,14 @@ namespace Monitoring.Business.Service
       _deviceRepository = deviceRepository;
     }
 
-    public Task<Device> GetDevice(string deviceId)
+    public Task<Device> GetDevice(string deviceUuid)
     {
-      return _deviceRepository.GetByDeviceId(deviceId);
+      return _deviceRepository.GetDevice(deviceUuid);
     }
 
     public Task<IEnumerable<Device>> GetDevices()
     {
-      return _deviceRepository.GetAll();
+      return _deviceRepository.GetDevices();
     }
   }
 }

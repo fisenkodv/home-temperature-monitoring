@@ -18,16 +18,16 @@ namespace Monitoring.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<DeviceDto>> GetDevices()
+    public async Task<IEnumerable<DeviceDto>> GetAllDevices()
     {
       var devices = await _deviceService.GetDevices();
       return devices.Select(DeviceDto.FromModel);
     }
 
-    [HttpGet("{deviceId}")]
-    public async Task<DeviceDto> GetDevice(string deviceId)
+    [HttpGet("{deviceUuid}")]
+    public async Task<DeviceDto> GetDevice(string deviceUuid)
     {
-      var device = await _deviceService.GetDevice(deviceId);
+      var device = await _deviceService.GetDevice(deviceUuid);
       return DeviceDto.FromModel(device);
     }
   }

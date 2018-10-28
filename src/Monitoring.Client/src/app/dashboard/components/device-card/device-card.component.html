@@ -1,7 +1,7 @@
 <mat-card class="mb-3">
   <mat-card-header>
     <mat-card-title class="align-items-center d-flex">
-      <span class="status" [ngClass]="{'status--online': telemetry.online, 'status--offline': !telemetry.online}" *ngIf="!loading"></span>
+      <span class="status" [ngClass]="{'status--online': online, 'status--offline': !online}" *ngIf="!loading"></span>
       {{device.name}}
     </mat-card-title>
   </mat-card-header>
@@ -9,7 +9,7 @@
     <div class="info" *ngIf="!loading">
       <div class="info__block">
         <div class="info__temperature">
-          <span class="value">{{telemetry.temperature|number:'1.1-1'}}</span>
+          <span class="value">{{measurement.temperature|number:'1.1-1'}}</span>
         </div>
         <div class="info__unit">
           <span class="unit__scale">C</span>
@@ -18,11 +18,11 @@
       <div class="info__block info__block--extra">
         <div class="info__field">
           <span class="label">Humidity:</span>
-          <span class="value">{{telemetry.humidity|number:'1.1-1'}}%</span>
+          <span class="value">{{measurement.humidity|number:'1.1-1'}}%</span>
         </div>
         <div class="info__field">
           <span class="label">Feels Like:</span>
-          <span class="value">{{telemetry.heat_index|number:'1.1-1'}}°C</span>
+          <span class="value">{{measurement.heatIndex|number:'1.1-1'}}°C</span>
         </div>
       </div>
     </div>
