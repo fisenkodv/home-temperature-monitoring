@@ -1,10 +1,8 @@
 # Home Temperature Monitoring
 
-## Build
+## Dashboard
 
-## Run on Raspberry PI
-
-`node server/app/main.js &>/dev/null & python3 receiver.py --url "http://localhost:3000/api/telemetry" &>/dev/null`
+![Dashboard](https://github.com/fisenkodv/home-temperature-monitoring/blob/master/assets/images/dashboard.png)
 
 ## License
 
