@@ -8,6 +8,9 @@
       <PackageReference Include="JetBrains.Annotations">
         <Version>2018.2.1</Version>
       </PackageReference>
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory">
+        <Version>2.1.2</Version>
+      </PackageReference>
       <PackageReference Include="Newtonsoft.Json">
         <Version>11.0.2</Version>
       </PackageReference>

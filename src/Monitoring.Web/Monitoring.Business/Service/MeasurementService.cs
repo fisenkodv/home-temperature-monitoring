@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Monitoring.Business.Abstract.Repository;
 using Monitoring.Business.Model;
 
@@ -11,11 +12,16 @@ namespace Monitoring.Business.Service
   [UsedImplicitly]
   public class MeasurementService
   {
+    private const int Threshold = 500;
+
+    private readonly IMemoryCache _memoryCache;
     private readonly IMeasurementRepository _measurementRepository;
     private readonly IDeviceRepository _deviceRepository;
 
-    public MeasurementService(IMeasurementRepository measurementRepository, IDeviceRepository deviceRepository)
+    public MeasurementService(IMemoryCache memoryCache, IMeasurementRepository measurementRepository,
+      IDeviceRepository deviceRepository)
     {
+      _memoryCache = memoryCache;
       _measurementRepository = measurementRepository;
       _deviceRepository = deviceRepository;
     }
@@ -24,15 +30,26 @@ namespace Monitoring.Business.Service
     {
       var device = await _deviceRepository.GetDevice(deviceUuid);
       if (device == null)
-      {
         await _deviceRepository.CreateDevice(deviceUuid, "unknown device", true);
+
+      if (!_memoryCache.TryGetValue<List<Measurement>>(deviceUuid, out var measurements))
+        measurements = new List<Measurement>();
+
+      measurements.Add(new Measurement {Humidity = humidity, Temperature = temperature, TimeStamp = DateTime.UtcNow});
+      if (measurements.Count > Threshold)
+      {
+        await _measurementRepository.CreateMeasurements(deviceUuid, measurements);
+        measurements.Clear();
       }
 
-      await _measurementRepository.CreateMeasurement(temperature, humidity, deviceUuid, DateTime.UtcNow);
+      _memoryCache.Set(deviceUuid, measurements);
     }
 
     public async Task<Measurement> GetLatestMeasurement(string deviceUuid)
     {
+      if (_memoryCache.TryGetValue<List<Measurement>>(deviceUuid, out var measurements) && measurements.Any())
+        return measurements.Last();
+
       return await _measurementRepository.GetLatestMeasurement(deviceUuid);
     }
 
@@ -40,7 +57,7 @@ namespace Monitoring.Business.Service
     {
       if (hours > 24 * 31)
         return Enumerable.Empty<Measurement>();
-      
+
       return await _measurementRepository.GetMeasurements(deviceUuid, hours);
     }
   }

@@ -10,6 +10,7 @@ namespace Monitoring.Api.Controllers
   [Route("api/measurements")]
   public class MeasurementController : Controller
   {
+    
     private readonly MeasurementService _measurementService;
 
     public MeasurementController(MeasurementService measurementService)

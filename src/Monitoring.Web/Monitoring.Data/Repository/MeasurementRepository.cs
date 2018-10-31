@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
@@ -17,7 +16,7 @@ namespace Monitoring.Data.Repository
       _configuration = configuration;
     }
 
-    public async Task CreateMeasurement(float temperature, float humidity, string deviceUuid, DateTime timeStamp)
+    public async Task CreateMeasurements(string deviceUuid, List<Measurement> measurements)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {
@@ -30,8 +29,11 @@ namespace Monitoring.Data.Repository
           INSERT INTO measurements(humidity, temperature, time_stamp, device_id) 
           VALUES (@Humidity, @Temperature, @TimeStamp, @DeviceId)";
 
-        await connection.ExecuteAsync(query,
-          new {Humidity = humidity, Temperature = temperature, TimeStamp = timeStamp, DeviceId = deviceId});
+        foreach (var measurement in measurements)
+        {
+          await connection.ExecuteAsync(query,
+            new {measurement.Humidity, measurement.Temperature, measurement.TimeStamp, DeviceId = deviceId});
+        }
       }
     }
 
