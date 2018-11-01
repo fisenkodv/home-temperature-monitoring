@@ -12,7 +12,7 @@ namespace Monitoring.Business.Service
   [UsedImplicitly]
   public class MeasurementService
   {
-    private const int Threshold = 500;
+    private const int Threshold = 60; // each ~10 minutes 
 
     private readonly IMemoryCache _memoryCache;
     private readonly IMeasurementRepository _measurementRepository;
