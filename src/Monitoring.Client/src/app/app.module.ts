@@ -9,22 +9,31 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { environment } from '@env/environment';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsModule } from '@ngxs/store';
 
 import { AboutModule } from './about/about.module';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { MaterialModule } from './material.module';
+import { AppComponent } from './shell/components/app/app.component';
 import { ShellModule } from './shell/shell.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production,
     }),
-    FormsModule,
+    NgxsModule.forRoot([]),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production,
+    }),
+    NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: false }),
+
     HttpClientModule,
     MaterialModule,
     CoreModule,
@@ -34,7 +43,6 @@ import { ShellModule } from './shell/shell.module';
     AboutModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

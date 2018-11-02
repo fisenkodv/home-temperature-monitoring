@@ -12,6 +12,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { MeasurementsService } from './services';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { DevicePageComponent } from './components/device-page/device-page.component';
+import { NgxsModule } from '@ngxs/store';
+import { States } from './store/module.state';
 
 const COMPONENTS = [
   DashboardPageComponent,
@@ -26,6 +28,7 @@ const COMPONENTS = [
     CommonModule,
     CoreModule,
     SharedModule,
+    NgxsModule.forFeature(States),
     MaterialModule,
     NgxChartsModule,
     DashboardRoutingModule,
