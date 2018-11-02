@@ -36,8 +36,8 @@ export class DeviceCardComponent implements OnInit, OnDestroy {
         .getLatestMeasurement(this.device.uuid)
         .pipe(
           tap(result => {
-            this.measurement = Measurement.fromDto(result);
-            this.online = this.isOnline(result.time_stamp);
+            this.measurement = result;
+            this.online = this.isOnline(result.timeStamp);
             this.loading = false;
           }),
           catchError(error => {

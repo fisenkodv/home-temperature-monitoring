@@ -1,12 +1,15 @@
 <mat-card class="mb-3">
   <mat-card-header>
     <mat-card-title class="align-items-center d-flex">
-      <span class="status" [ngClass]="{'status--online': online, 'status--offline': !online}" *ngIf="!loading"></span>
+      <span class="status"
+            [ngClass]="{'status--online': online, 'status--offline': !online}"
+            *ngIf="!loading"></span>
       {{device.name}}
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="info" *ngIf="!loading">
+    <div class="info"
+         *ngIf="!loading">
       <div class="info__block">
         <div class="info__temperature">
           <span class="value">{{measurement.temperature|number:'1.1-1'}}</span>
@@ -29,6 +32,7 @@
 
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button [routerLink]="['/dashboard', device.uuid]">DETAILS</button>
+    <button mat-button
+            [routerLink]="['/dashboard', device.uuid]">DETAILS</button>
   </mat-card-actions>
 </mat-card>

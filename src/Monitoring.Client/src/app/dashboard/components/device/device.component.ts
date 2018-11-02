@@ -21,12 +21,7 @@ export class DeviceComponent implements OnInit {
     const deviceUuid = this.route.snapshot.paramMap.get('uuid');
     this.measurementsService
       .getMeasurements(deviceUuid, 24)
-      .pipe(
-        tap(
-          measurements =>
-            (this.measurements = measurements.map(Measurement.fromDto)),
-        ),
-      )
+      .pipe(tap(measurements => (this.measurements = measurements)))
       //finalize(() => (this.isLoading = false)),
       .subscribe();
   }
