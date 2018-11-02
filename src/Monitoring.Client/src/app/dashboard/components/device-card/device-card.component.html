@@ -8,28 +8,8 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="info"
-         *ngIf="!loading">
-      <div class="info__block">
-        <div class="info__temperature">
-          <span class="value">{{measurement.temperature|number:'1.1-1'}}</span>
-        </div>
-        <div class="info__unit">
-          <span class="unit__scale">C</span>
-        </div>
-      </div>
-      <div class="info__block info__block--extra">
-        <div class="info__field">
-          <span class="label">Humidity:</span>
-          <span class="value">{{measurement.humidity|number:'1.1-1'}}%</span>
-        </div>
-        <div class="info__field">
-          <span class="label">Feels Like:</span>
-          <span class="value">{{measurement.heatIndex|number:'1.1-1'}}°C</span>
-        </div>
-      </div>
-    </div>
-
+    <app-measurement *ngIf="!loading"
+                     [measurement]="measurement"></app-measurement>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button

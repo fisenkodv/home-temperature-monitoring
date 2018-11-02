@@ -1,0 +1,50 @@
+.measurement {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+
+  &__block {
+    &--extra {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: baseline;
+    }
+  }
+
+  &__temperature {
+    font-size: 5em;
+    display: inline-block;
+    &::after {
+      content: '°';
+      font-weight: 100;
+      margin-left: 0px;
+      margin-top: -10px;
+      position: absolute;
+    }
+  }
+
+  &__unit-scale {
+    font-size: 5em;
+    font-weight: 100;
+  }
+
+  &__unit {
+    font-size: 3em;
+    font-weight: 100;
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  &__field {
+    .label {
+      font-size: 1em;
+      font-weight: 300;
+      margin-right: 5px;
+    }
+
+    .value {
+      font-size: 1.3em;
+    }
+  }
+}

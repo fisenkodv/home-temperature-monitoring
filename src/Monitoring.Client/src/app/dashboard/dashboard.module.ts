@@ -5,18 +5,20 @@ import { MaterialModule } from '@app/material.module';
 import { SharedModule } from '@app/shared';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DeviceCardComponent } from './components/device-card/device-card.component';
-import { DeviceComponent } from './components/device/device.component';
+import { MeasurementComponent } from './components/measurement/measurement.component';
 import { MeasurementsComponent } from './components/measurements/measurements.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { MeasurementsService } from './services';
+import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
+import { DevicePageComponent } from './components/device-page/device-page.component';
 
 const COMPONENTS = [
-  DashboardComponent,
+  DashboardPageComponent,
+  DevicePageComponent,
   DeviceCardComponent,
-  DeviceComponent,
   MeasurementsComponent,
+  MeasurementComponent,
 ];
 
 @NgModule({

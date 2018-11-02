@@ -1,0 +1,20 @@
+<div class="measurement">
+  <div class="measurement__block">
+    <div class="measurement__temperature">
+      <span class="value">{{measurement.temperature|number:'1.1-1'}}</span>
+    </div>
+    <div class="measurement__unit">
+      <span class="unit__scale">C</span>
+    </div>
+  </div>
+  <div class="measurement__block measurement__block--extra">
+    <div class="measurement__field">
+      <span class="label">Humidity:</span>
+      <span class="value">{{measurement.humidity|number:'1.1-1'}}%</span>
+    </div>
+    <div class="measurement__field">
+      <span class="label">Feels Like:</span>
+      <span class="value">{{measurement.heatIndex|number:'1.1-1'}}°C</span>
+    </div>
+  </div>
+</div>

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Shell } from '@app/shell/services/shell.service';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DeviceComponent } from './components/device/device.component';
+import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
+import { DevicePageComponent } from './components/device-page/device-page.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -11,8 +11,8 @@ const routes: Routes = [
     {
       path: 'dashboard',
       children: [
-        { path: '', component: DashboardComponent },
-        { path: ':uuid', component: DeviceComponent },
+        { path: '', component: DashboardPageComponent },
+        { path: ':uuid', component: DevicePageComponent },
       ],
     },
   ]),

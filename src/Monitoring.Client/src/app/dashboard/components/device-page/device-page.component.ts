@@ -5,11 +5,11 @@ import { MeasurementsService } from '@app/dashboard/services';
 import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-device',
-  templateUrl: './device.component.html',
-  styleUrls: ['./device.component.scss'],
+  selector: 'app-device-page',
+  templateUrl: './device-page.component.html',
+  styleUrls: ['./device-page.component.scss'],
 })
-export class DeviceComponent implements OnInit {
+export class DevicePageComponent implements OnInit {
   measurements: Measurement[];
 
   constructor(
