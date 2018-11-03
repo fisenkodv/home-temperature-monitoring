@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Measurement } from '@app/dashboard/models';
+import { Measurement } from '@app/devices/models';
 
 @Component({
   selector: 'app-measurement',

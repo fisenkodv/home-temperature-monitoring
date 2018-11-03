@@ -30,25 +30,25 @@ export class DeviceCardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
 
-    const source = timer(0, this.FetchInterval);
-    source.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
-      this.measurementsService
-        .getLatestMeasurement(this.device.uuid)
-        .pipe(
-          tap(result => {
-            this.measurement = result;
-            this.online = this.isOnline(result.timeStamp);
-            this.loading = false;
-          }),
-          catchError(error => {
-            logger.error(
-              `Unable to retrieve measurement data from: ${this.device.uuid}`,
-            );
-            return EMPTY;
-          }),
-        )
-        .subscribe();
-    });
+    // const source = timer(0, this.FetchInterval);
+    // source.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
+    //   this.measurementsService
+    //     .getLatestMeasurement(this.device.uuid)
+    //     .pipe(
+    //       tap(result => {
+    //         this.measurement = result;
+    //         this.online = this.isOnline(result.timeStamp);
+    //         this.loading = false;
+    //       }),
+    //       catchError(error => {
+    //         logger.error(
+    //           `Unable to retrieve measurement data from: ${this.device.uuid}`,
+    //         );
+    //         return EMPTY;
+    //       }),
+    //     )
+    //     .subscribe();
+    // });
   }
 
   ngOnDestroy(): void {

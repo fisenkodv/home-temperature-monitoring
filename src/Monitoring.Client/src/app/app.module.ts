@@ -14,7 +14,7 @@ import { NgxsModule } from '@ngxs/store';
 
 import { AboutModule } from './about/about.module';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardModule } from './dashboard/dashboard.module';
+import { DevicesModule } from './devices/devices.module';
 import { MaterialModule } from './material.module';
 import { AppComponent } from './shell/components/app/app.component';
 import { ShellModule } from './shell/shell.module';
@@ -38,7 +38,7 @@ import { States } from './store/module.store';
     MaterialModule,
     CoreModule,
     ShellModule,
-    DashboardModule,
+    DevicesModule,
     AboutModule,
     AppRoutingModule,
   ],

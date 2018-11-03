@@ -11,4 +11,8 @@ export class DeviceService {
   getAll(): Observable<Device[]> {
     return this.httpClient.get<Device[]>('/devices');
   }
+
+  get(deviceUuid: string): Observable<Device> {
+    return this.httpClient.get<Device>(`/devices/${deviceUuid}`);
+  }
 }

@@ -1,6 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
-import { DevicesState } from '../dashboard/store/devices.state';
+import { DevicesState } from '../devices/store/devices.state';
 import { SetLoading } from './app.actions';
 
 export interface ApplicationStateModel {
