@@ -1,4 +1,5 @@
 {
+  "parser": "typescript",
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "es5"
 }

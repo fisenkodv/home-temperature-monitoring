@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize, tap } from 'rxjs/operators';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
+import { ApplicationState } from '../../../store/app.store';
 import { Device } from '../../models';
-import { DeviceService } from '../../services';
+import { LoadDevices } from '../../store/devices.actions';
+import { DevicesState } from '../../store/devices.state';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -10,20 +13,15 @@ import { DeviceService } from '../../services';
   styleUrls: ['./dashboard-page.component.scss'],
 })
 export class DashboardPageComponent implements OnInit {
-  isLoading: boolean;
-  devices: Device[] = [];
+  @Select(ApplicationState.loading)
+  loading$: Observable<boolean>;
 
-  constructor(private deviceService: DeviceService) {}
+  @Select(DevicesState.devices)
+  devices$: Observable<Device[]>;
+
+  constructor(private store: Store) {}
 
   ngOnInit() {
-    this.isLoading = true;
-
-    this.deviceService
-      .getAll()
-      .pipe(
-        tap(devices => (this.devices = devices)),
-        finalize(() => (this.isLoading = false)),
-      )
-      .subscribe();
+    this.store.dispatch(new LoadDevices());
   }
 }

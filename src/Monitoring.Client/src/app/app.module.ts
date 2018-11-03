@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from '@app/core';
-import { SharedModule } from '@app/shared';
 import { environment } from '@env/environment';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -19,6 +18,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { MaterialModule } from './material.module';
 import { AppComponent } from './shell/components/app/app.component';
 import { ShellModule } from './shell/shell.module';
+import { States } from './store/module.store';
 
 @NgModule({
   imports: [
@@ -28,7 +28,7 @@ import { ShellModule } from './shell/shell.module';
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production,
     }),
-    NgxsModule.forRoot([]),
+    NgxsModule.forRoot(States),
     NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production,
     }),
@@ -37,7 +37,6 @@ import { ShellModule } from './shell/shell.module';
     HttpClientModule,
     MaterialModule,
     CoreModule,
-    SharedModule,
     ShellModule,
     DashboardModule,
     AboutModule,

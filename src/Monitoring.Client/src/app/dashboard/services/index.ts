@@ -1,2 +1,2 @@
-export * from '../../shared/services/device.service';
+export * from './device.service';
 export * from './measurements.service';
