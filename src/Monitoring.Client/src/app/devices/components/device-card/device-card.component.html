@@ -1,8 +1,9 @@
-<mat-card class="mb-3">
+<mat-card class="mb-3"
+          *ngIf="(measurement$ | async) as measurement">
   <mat-card-header>
     <mat-card-title class="align-items-center d-flex">
       <span class="status"
-            [ngClass]="{'status--online': online, 'status--offline': !online}"
+            [ngClass]="{'status--online': isOnline(measurement.timeStamp), 'status--offline': !isOnline(measurement.timeStamp)}"
             *ngIf="!loading"></span>
       {{device.name}}
     </mat-card-title>

@@ -1,11 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Logger } from '@app/core';
 import * as moment from 'moment';
-import { EMPTY, Subject, timer } from 'rxjs';
+import { EMPTY, Subject, timer, Observable } from 'rxjs';
 import { catchError, takeUntil, tap } from 'rxjs/operators';
 
 import { Device, Measurement } from '../../models';
 import { MeasurementsService } from '../../services';
+import { Store } from '@ngxs/store';
+import { DevicesState } from '@app/devices/store/devices.state';
 
 const logger = new Logger('Device');
 
@@ -15,45 +17,20 @@ const logger = new Logger('Device');
   styleUrls: ['./device-card.component.scss'],
 })
 export class DeviceCardComponent implements OnInit, OnDestroy {
-  private FetchInterval = 10000;
-  private unsubscribe: Subject<void> = new Subject();
-
-  loading: boolean;
-  online: boolean;
-  measurement: Measurement;
+  measurement$: Observable<Measurement>;
 
   @Input()
   device: Device;
 
-  constructor(private measurementsService: MeasurementsService) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
-    this.loading = true;
-
-    // const source = timer(0, this.FetchInterval);
-    // source.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
-    //   this.measurementsService
-    //     .getLatestMeasurement(this.device.uuid)
-    //     .pipe(
-    //       tap(result => {
-    //         this.measurement = result;
-    //         this.online = this.isOnline(result.timeStamp);
-    //         this.loading = false;
-    //       }),
-    //       catchError(error => {
-    //         logger.error(
-    //           `Unable to retrieve measurement data from: ${this.device.uuid}`,
-    //         );
-    //         return EMPTY;
-    //       }),
-    //     )
-    //     .subscribe();
-    // });
+    this.measurement$ = this.store.select(
+      DevicesState.measurement(this.device.uuid)
+    );
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
   }
 
   private isOnline(timeStamp: Date): boolean {
