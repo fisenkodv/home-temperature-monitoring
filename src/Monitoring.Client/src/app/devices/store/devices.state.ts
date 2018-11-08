@@ -1,22 +1,26 @@
 import {
   Action,
+  createSelector,
   Selector,
   State,
   StateContext,
-  createSelector,
 } from '@ngxs/store';
+import { forkJoin } from 'rxjs';
 import { finalize, map, tap } from 'rxjs/operators';
 
 import { SetLoading } from '../../store/app.actions';
 import { Device, Measurement } from '../models';
 import { DeviceService, MeasurementsService } from '../services';
 import { LoadDevice, LoadDevices, LoadMeasurement } from './devices.actions';
-import { forkJoin } from 'rxjs';
 
-export type DeviceItemStateModel = Device & { measurements: Measurement[] };
-//export type DevicesStateModel = DeviceItemStateModel[];
+export interface DeviceItemStateModel {
+  name: string;
+  measurements: Measurement[];
+}
 
-export type DevicesStateModel = { [key: string]: DeviceItemStateModel };
+export interface DevicesStateModel {
+  [key: string]: DeviceItemStateModel;
+}
 
 @State<DevicesStateModel>({
   name: 'devices',
@@ -25,7 +29,9 @@ export type DevicesStateModel = { [key: string]: DeviceItemStateModel };
 export class DevicesState {
   @Selector()
   public static devices(state: DevicesStateModel): Device[] {
-    return Object.values(state);
+    return Object.keys(state).map(
+      deviceUuid => <Device>{ ...state[deviceUuid], uuid: deviceUuid }
+    );
   }
 
   static measurement(deviceUuid: string) {
@@ -41,17 +47,14 @@ export class DevicesState {
   ) {}
 
   @Action(LoadDevices)
-  loadDevices({
-    patchState,
-    setState,
-    dispatch,
-  }: StateContext<DevicesStateModel>) {
+  loadDevices({ patchState, dispatch }: StateContext<DevicesStateModel>) {
     dispatch(new SetLoading(true));
     return this.deviceService.getAll().pipe(
       map(devices =>
-        devices
-          .map(x => this.deviceToDeviceItemStateModel(x))
-          .forEach(x => patchState({ [x.uuid]: x }))
+        devices.forEach(x => {
+          const model = this.deviceToDeviceItemStateModel(x);
+          patchState({ [x.uuid]: model });
+        })
       ),
       finalize(() => dispatch(new SetLoading(false)))
     );
@@ -59,14 +62,16 @@ export class DevicesState {
 
   @Action(LoadDevice)
   loadDevice(
-    { setState, dispatch }: StateContext<DevicesStateModel>,
+    { patchState, dispatch }: StateContext<DevicesStateModel>,
     { deviceUuid }: LoadDevice
   ) {
-    // dispatch(new SetLoading(true));
-    // return this.deviceService.get(deviceUuid).pipe(
-    //   map(device => setState([this.deviceToDeviceItemStateModel(device)])),
-    //   finalize(() => dispatch(new SetLoading(false)))
-    // );
+    dispatch(new SetLoading(true));
+    return this.deviceService.get(deviceUuid).pipe(
+      map(device =>
+        patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })
+      ),
+      finalize(() => dispatch(new SetLoading(false)))
+    );
   }
 
   @Action(LoadMeasurement)
