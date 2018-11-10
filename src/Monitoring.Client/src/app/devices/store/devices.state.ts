@@ -1,17 +1,11 @@
-import {
-  Action,
-  createSelector,
-  Selector,
-  State,
-  StateContext,
-} from '@ngxs/store';
+import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
 import { forkJoin } from 'rxjs';
 import { finalize, map, tap } from 'rxjs/operators';
 
 import { SetLoading } from '../../store/app.actions';
 import { Device, Measurement } from '../models';
 import { DeviceService, MeasurementsService } from '../services';
-import { LoadDevice, LoadDevices, LoadMeasurement } from './devices.actions';
+import { LoadDevice, LoadDevices, LoadMeasurement, LoadMeasurements } from './devices.actions';
 
 export interface DeviceItemStateModel {
   name: string;
@@ -28,10 +22,14 @@ export interface DevicesStateModel {
 })
 export class DevicesState {
   @Selector()
-  public static devices(state: DevicesStateModel): Device[] {
-    return Object.keys(state).map(
-      deviceUuid => <Device>{ ...state[deviceUuid], uuid: deviceUuid }
-    );
+  static devices(state: DevicesStateModel): Device[] {
+    return Object.keys(state).map(deviceUuid => <Device>{ ...state[deviceUuid], uuid: deviceUuid });
+  }
+
+  static device(deviceUuid: string) {
+    return createSelector([DevicesState], (state: DevicesStateModel) => {
+      return <Device>{ ...state[deviceUuid], uuid: deviceUuid };
+    });
   }
 
   static measurement(deviceUuid: string) {
@@ -41,10 +39,14 @@ export class DevicesState {
     });
   }
 
-  constructor(
-    private deviceService: DeviceService,
-    private measurementService: MeasurementsService
-  ) {}
+  static measurements(deviceUuid: string) {
+    return createSelector([DevicesState], (state: DevicesStateModel) => {
+      const device = state[deviceUuid];
+      return device.measurements.slice(1) || [];
+    });
+  }
+
+  constructor(private deviceService: DeviceService, private measurementService: MeasurementsService) {}
 
   @Action(LoadDevices)
   loadDevices({ patchState, dispatch }: StateContext<DevicesStateModel>) {
@@ -61,15 +63,10 @@ export class DevicesState {
   }
 
   @Action(LoadDevice)
-  loadDevice(
-    { patchState, dispatch }: StateContext<DevicesStateModel>,
-    { deviceUuid }: LoadDevice
-  ) {
+  loadDevice({ patchState, dispatch }: StateContext<DevicesStateModel>, { deviceUuid }: LoadDevice) {
     dispatch(new SetLoading(true));
     return this.deviceService.get(deviceUuid).pipe(
-      map(device =>
-        patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })
-      ),
+      map(device => patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })),
       finalize(() => dispatch(new SetLoading(false)))
     );
   }
@@ -78,9 +75,7 @@ export class DevicesState {
   loadMeasurement({ patchState, getState }: StateContext<DevicesStateModel>) {
     const state = getState();
     const ids = Object.keys(state);
-    return forkJoin(
-      ids.map(x => this.measurementService.getLatestMeasurement(x))
-    ).pipe(
+    return forkJoin(ids.map(x => this.measurementService.getLatestMeasurement(x))).pipe(
       tap(measurements => {
         measurements.forEach((measurement, index) => {
           const deviceUuid = ids[index];
@@ -94,10 +89,21 @@ export class DevicesState {
     );
   }
 
-  private deviceToDeviceItemStateModel(
-    device: Device,
-    measurements: Measurement[] = []
-  ): DeviceItemStateModel {
-    return { ...device, measurements: measurements };
+  @Action(LoadMeasurements)
+  loadMeasurements({ patchState, getState }: StateContext<DevicesStateModel>, { deviceUuid, hours }: LoadMeasurements) {
+    return this.measurementService.getMeasurements(deviceUuid, hours).pipe(
+      tap(measurements => {
+        const state = getState();
+        const device = state[deviceUuid];
+        device.measurements = [device.measurements[0], ...measurements];
+
+        patchState({ [deviceUuid]: device });
+      }),
+      finalize(() => {})
+    );
+  }
+
+  private deviceToDeviceItemStateModel(device: Device, measurements: Measurement[] = []): DeviceItemStateModel {
+    return { name: device.name, measurements: measurements };
   }
 }

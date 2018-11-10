@@ -19,7 +19,7 @@ export class MeasurementsComponent implements OnInit {
   ngOnInit(): void {}
 
   getData() {
-    if (!this.measurements) {
+    if (!this.measurements || !this.measurements.length) {
       return [];
     }
     if (this.cachedData !== undefined) {
@@ -31,25 +31,25 @@ export class MeasurementsComponent implements OnInit {
         series: this.measurements.map(x => {
           return {
             value: x.temperature,
-            name: moment(x.timeStamp).format('LLL'),
+            name: new Date(x.timeStamp),
           };
         }),
       },
-      {
-        name: 'Humidity',
-        series: this.measurements.map(x => {
-          return { value: x.humidity, name: moment(x.timeStamp).format('LLL') };
-        }),
-      },
-      {
-        name: 'Heat Index',
-        series: this.measurements.map(x => {
-          return {
-            value: x.heatIndex,
-            name: moment(x.timeStamp).format('LLL'),
-          };
-        }),
-      },
+      // {
+      //   name: 'Humidity',
+      //   series: this.measurements.map(x => {
+      //     return { value: x.humidity, name: moment(x.timeStamp).format('LLL') };
+      //   }),
+      // },
+      // {
+      //   name: 'Heat Index',
+      //   series: this.measurements.map(x => {
+      //     return {
+      //       value: x.heatIndex,
+      //       name: moment(x.timeStamp).format('LLL'),
+      //     };
+      //   }),
+      // },
     ];
 
     return this.cachedData;

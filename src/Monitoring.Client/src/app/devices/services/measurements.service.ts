@@ -18,7 +18,7 @@ export class MeasurementsService {
 
   getMeasurements(
     deviceUuid: string,
-    hours: number,
+    hours: number
   ): Observable<Measurement[]> {
     return this.httpClient
       .get<MeasurementDto[]>(`/measurements/${deviceUuid}/${hours}`)

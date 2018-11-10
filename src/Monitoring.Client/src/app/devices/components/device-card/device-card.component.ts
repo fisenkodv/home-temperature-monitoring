@@ -30,10 +30,9 @@ export class DeviceCardComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
-  private isOnline(timeStamp: Date): boolean {
-    return moment.utc().diff(moment(timeStamp).utc(), 'minutes') === 0;
+  private isOnline(measurement: Measurement): boolean {
+    return moment.utc().diff(moment(measurement.timeStamp).utc(), 'minutes') === 0;
   }
 }

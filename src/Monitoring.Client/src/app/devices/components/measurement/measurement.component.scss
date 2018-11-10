@@ -4,11 +4,14 @@
   justify-content: space-around;
 
   &__block {
+    white-space: nowrap;
+    padding-right: 10px;
     &--extra {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: baseline;
+      padding-right: 0;
     }
   }
 
@@ -37,6 +40,7 @@
   }
 
   &__field {
+    white-space: nowrap;
     .label {
       font-size: 1em;
       font-weight: 300;

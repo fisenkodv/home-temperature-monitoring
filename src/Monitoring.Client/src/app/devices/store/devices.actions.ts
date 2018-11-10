@@ -12,3 +12,8 @@ export class LoadMeasurement {
   static readonly type = '[device] load measurement';
   constructor() {}
 }
+
+export class LoadMeasurements {
+  static readonly type = '[device] load measurements';
+  constructor(public deviceUuid: string, public hours: number) {}
+}

@@ -3,7 +3,7 @@
   <mat-card-header>
     <mat-card-title class="align-items-center d-flex">
       <span class="status"
-            [ngClass]="{'status--online': isOnline(measurement.timeStamp), 'status--offline': !isOnline(measurement.timeStamp)}"
+            [ngClass]="{'status--online': isOnline(measurement), 'status--offline': !isOnline(measurement)}"
             *ngIf="!loading"></span>
       {{device.name}}
     </mat-card-title>
