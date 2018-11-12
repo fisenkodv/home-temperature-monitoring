@@ -12,7 +12,7 @@ export class MeasurementsComponent implements OnInit {
 
   @Input()
   measurements: Measurement[] = [];
-  view = [700, 400];
+  view = [null, 400];
 
   constructor() {}
 
