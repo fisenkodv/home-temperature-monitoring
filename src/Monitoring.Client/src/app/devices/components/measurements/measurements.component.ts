@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Measurement } from '@app/devices/models';
 import * as moment from 'moment';
-
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.component.html',
@@ -9,49 +9,26 @@ import * as moment from 'moment';
 })
 export class MeasurementsComponent implements OnInit {
   private cachedData: any = undefined;
-
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   @Input()
-  measurements: Measurement[] = [];
-  view = [null, 400];
+  set measurements(measurements: Measurement[]) {
+    if (measurements && measurements.length) {
+      this.lineChartLabels = measurements.map(x => moment(x.timeStamp).format('LLL'));
+      this.chart.chart.config.data.labels = this.lineChartLabels;
+      const temperature = measurements.map(x => x.temperature);
+      const heatIndex = measurements.map(x => x.heatIndex);
+
+      this.lineChartData = [{ data: temperature, label: 'temperature' }, { data: heatIndex, label: 'heat index' }];
+    }
+  }
+
+  public lineChartData: Array<any> = [[65, 59, 80, 81, 56, 55, 40], [28, 48, 40, 19, 86, 27, 90]];
+  public lineChartOptions: any = {
+    responsive: true,
+  };
+  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  getData() {
-    if (!this.measurements || !this.measurements.length) {
-      return [];
-    }
-    if (this.cachedData !== undefined) {
-      return this.cachedData;
-    }
-    this.cachedData = [
-      {
-        name: 'Temperature',
-        series: this.measurements.map(x => {
-          return {
-            value: x.temperature,
-            name: new Date(x.timeStamp),
-          };
-        }),
-      },
-      // {
-      //   name: 'Humidity',
-      //   series: this.measurements.map(x => {
-      //     return { value: x.humidity, name: moment(x.timeStamp).format('LLL') };
-      //   }),
-      // },
-      // {
-      //   name: 'Heat Index',
-      //   series: this.measurements.map(x => {
-      //     return {
-      //       value: x.heatIndex,
-      //       name: moment(x.timeStamp).format('LLL'),
-      //     };
-      //   }),
-      // },
-    ];
-
-    return this.cachedData;
-  }
 }
