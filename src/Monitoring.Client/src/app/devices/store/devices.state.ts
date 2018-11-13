@@ -8,6 +8,7 @@ import { DeviceService, MeasurementsService } from '../services';
 import { LoadDevice, LoadDevices, LoadMeasurement, LoadMeasurements } from './devices.actions';
 
 export interface DeviceItemStateModel {
+  loading: boolean;
   name: string;
   measurements: Measurement[];
 }
@@ -27,23 +28,32 @@ export class DevicesState {
   }
 
   static device(deviceUuid: string) {
-    return createSelector([DevicesState], (state: DevicesStateModel) => {
-      return <Device>{ ...state[deviceUuid], uuid: deviceUuid };
-    });
+    return createSelector(
+      [DevicesState],
+      (state: DevicesStateModel) => {
+        return <Device>{ ...state[deviceUuid], uuid: deviceUuid };
+      }
+    );
   }
 
   static measurement(deviceUuid: string) {
-    return createSelector([DevicesState], (state: DevicesStateModel) => {
-      const device = state[deviceUuid];
-      return device.measurements ? device.measurements[0] : {};
-    });
+    return createSelector(
+      [DevicesState],
+      (state: DevicesStateModel) => {
+        const device = state[deviceUuid];
+        return device.measurements ? device.measurements[0] : {};
+      }
+    );
   }
 
   static measurements(deviceUuid: string) {
-    return createSelector([DevicesState], (state: DevicesStateModel) => {
-      const device = state[deviceUuid];
-      return device.measurements.slice(1) || [];
-    });
+    return createSelector(
+      [DevicesState],
+      (state: DevicesStateModel) => {
+        const device = state[deviceUuid];
+        return device.measurements.slice(1) || [];
+      }
+    );
   }
 
   constructor(private deviceService: DeviceService, private measurementService: MeasurementsService) {}
@@ -104,6 +114,6 @@ export class DevicesState {
   }
 
   private deviceToDeviceItemStateModel(device: Device, measurements: Measurement[] = []): DeviceItemStateModel {
-    return { name: device.name, measurements: measurements };
+    return { loading: false, name: device.name, measurements: measurements };
   }
 }
