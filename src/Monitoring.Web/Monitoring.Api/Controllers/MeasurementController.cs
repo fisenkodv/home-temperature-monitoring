@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Monitoring.Business.Dto;
+using Monitoring.Business.Model;
 using Monitoring.Business.Service;
 
 namespace Monitoring.Api.Controllers
@@ -10,7 +11,6 @@ namespace Monitoring.Api.Controllers
   [Route("api/measurements")]
   public class MeasurementController : Controller
   {
-    
     private readonly MeasurementService _measurementService;
 
     public MeasurementController(MeasurementService measurementService)
@@ -25,9 +25,9 @@ namespace Monitoring.Api.Controllers
     }
 
     [HttpGet("{deviceUuid}/{hours}")]
-    public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, int hours)
+    public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, MeasurementType measurementType)
     {
-      var measurements = await _measurementService.GetMeasurements(deviceUuid, hours);
+      var measurements = await _measurementService.GetMeasurements(deviceUuid, measurementType);
       return measurements.Select(MeasurementDto.FromModel);
     }
 

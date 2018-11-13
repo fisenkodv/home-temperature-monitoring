@@ -53,12 +53,17 @@ namespace Monitoring.Business.Service
       return await _measurementRepository.GetLatestMeasurement(deviceUuid);
     }
 
-    public async Task<IEnumerable<Measurement>> GetMeasurements(string deviceUuid, int hours)
+    public async Task<IEnumerable<Measurement>> GetMeasurements(string deviceUuid, MeasurementType measurementType)
     {
-      if (hours > 24 * 31)
+      if ((int)measurementType > 24 * 31)
         return Enumerable.Empty<Measurement>();
 
-      return await _measurementRepository.GetMeasurements(deviceUuid, hours);
+      // skip unnecessary measurements based on the following rules:
+      // if 'hour' return each 30 seconds
+      // if 'day' return each 30 minutes
+      // if 'week' return each 4 hours
+      // if 'month' return each 12 hours
+      return await _measurementRepository.GetMeasurements(deviceUuid, (int)measurementType);
     }
   }
 }
