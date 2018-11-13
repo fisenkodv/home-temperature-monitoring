@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Data", "Monitori
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Business", "Monitoring.Business\Monitoring.Business.csproj", "{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring.Tests", "Monitoring.Tests\Monitoring.Tests.csproj", "{EFE6F13D-4235-484B-BD30-A0E1439443BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6E7DDC5-FE32-4EDB-82ED-DD53C3BEFAB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE6F13D-4235-484B-BD30-A0E1439443BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE6F13D-4235-484B-BD30-A0E1439443BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE6F13D-4235-484B-BD30-A0E1439443BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE6F13D-4235-484B-BD30-A0E1439443BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
