@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,9 +54,9 @@ namespace Monitoring.Business.Service
       return await _measurementRepository.GetLatestMeasurement(deviceUuid);
     }
 
-    public async Task<IEnumerable<Measurement>> GetMeasurements(string deviceUuid, MeasurementType measurementType)
+    public async Task<IEnumerable<Measurement>> GetMeasurements(string deviceUuid, int hours)
     {
-      if ((int)measurementType > 24 * 31)
+      if (hours > 24 * 31)
         return Enumerable.Empty<Measurement>();
 
       // skip unnecessary measurements based on the following rules:
@@ -63,7 +64,31 @@ namespace Monitoring.Business.Service
       // if 'day' return each 30 minutes
       // if 'week' return each 4 hours
       // if 'month' return each 12 hours
-      return await _measurementRepository.GetMeasurements(deviceUuid, (int)measurementType);
+      var measurements = await _measurementRepository.GetMeasurements(deviceUuid, hours);
+
+      return FilterMeasurements(measurements, GetOffset(hours));
+    }
+
+    private TimeSpan GetOffset(int hours)
+    {
+      if (hours <= 1)
+        return TimeSpan.FromSeconds(30);
+      else if (hours > 1 && hours <= 24)
+        return TimeSpan.FromMinutes(30);
+      else if (hours > 24 && hours <= 7 * 24)
+        return TimeSpan.FromHours(4);
+      else return TimeSpan.FromHours(12);
+    }
+
+    private IEnumerable<Measurement> FilterMeasurements(IEnumerable<Measurement> measurements, TimeSpan offset)
+    {
+      var nextMeasurementTime = measurements.First().TimeStamp.Add(offset);
+      foreach (var measurement in measurements)
+      {
+        if (measurement.TimeStamp < nextMeasurementTime) continue;
+        nextMeasurementTime = measurement.TimeStamp;
+        yield return measurement;
+      }
     }
   }
 }

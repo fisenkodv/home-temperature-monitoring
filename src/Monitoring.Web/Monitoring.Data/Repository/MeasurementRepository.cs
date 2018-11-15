@@ -16,7 +16,7 @@ namespace Monitoring.Data.Repository
       _configuration = configuration;
     }
 
-    public async Task CreateMeasurements(string deviceUuid, List<Measurement> measurements)
+    public async Task CreateMeasurements(string deviceUuid, IEnumerable<Measurement> measurements)
     {
       using (var connection = ConnectionHelper.GetConnection(_configuration))
       {

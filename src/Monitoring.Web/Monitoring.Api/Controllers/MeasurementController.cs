@@ -25,9 +25,9 @@ namespace Monitoring.Api.Controllers
     }
 
     [HttpGet("{deviceUuid}/{hours}")]
-    public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, MeasurementType measurementType)
+    public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, int hours)
     {
-      var measurements = await _measurementService.GetMeasurements(deviceUuid, measurementType);
+      var measurements = await _measurementService.GetMeasurements(deviceUuid, hours );
       return measurements.Select(MeasurementDto.FromModel);
     }
 
