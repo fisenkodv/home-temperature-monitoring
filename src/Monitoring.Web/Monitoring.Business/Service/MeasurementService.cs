@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,34 +58,22 @@ namespace Monitoring.Business.Service
       if (hours > 24 * 31)
         return Enumerable.Empty<Measurement>();
 
-      // skip unnecessary measurements based on the following rules:
-      // if 'hour' return each 30 seconds
-      // if 'day' return each 30 minutes
-      // if 'week' return each 4 hours
-      // if 'month' return each 12 hours
       var measurements = await _measurementRepository.GetMeasurements(deviceUuid, hours);
 
-      return FilterMeasurements(measurements, GetOffset(hours));
+      return FilterMeasurements(measurements);
     }
 
-    private TimeSpan GetOffset(int hours)
+    private IEnumerable<Measurement> FilterMeasurements(IEnumerable<Measurement> measurements, int maxItems = 500)
     {
-      if (hours <= 1)
-        return TimeSpan.FromSeconds(30);
-      else if (hours > 1 && hours <= 24)
-        return TimeSpan.FromMinutes(30);
-      else if (hours > 24 && hours <= 7 * 24)
-        return TimeSpan.FromHours(4);
-      else return TimeSpan.FromHours(12);
-    }
+      var measurementsList = measurements.OrderBy(x => x.TimeStamp).ToList();
+      var timeDiff = measurementsList.Last().TimeStamp - measurementsList.First().TimeStamp;
+      var interval = timeDiff.Seconds / maxItems;
 
-    private IEnumerable<Measurement> FilterMeasurements(IEnumerable<Measurement> measurements, TimeSpan offset)
-    {
-      var nextMeasurementTime = measurements.First().TimeStamp.Add(offset);
-      foreach (var measurement in measurements)
+      var nextTimeStamp = measurementsList.First().TimeStamp.AddSeconds(interval);
+      foreach (var measurement in measurementsList)
       {
-        if (measurement.TimeStamp < nextMeasurementTime) continue;
-        nextMeasurementTime = measurement.TimeStamp;
+        if (measurement.TimeStamp < nextTimeStamp) continue;
+        nextTimeStamp = measurement.TimeStamp.AddSeconds(interval);
         yield return measurement;
       }
     }
