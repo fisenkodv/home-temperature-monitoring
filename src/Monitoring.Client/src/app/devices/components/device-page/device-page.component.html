@@ -1,16 +1,25 @@
 <div class="container mt-5">
   <h1 class="text-center">{{(device$ | async)?.name}}</h1>
   <div class="row">
-    <div class="col d-flex justify-content-center">
-      <app-measurement *ngIf="(measurement$|async) as measurement"
-                       [measurement]="measurement"></app-measurement>
+    <div class="col d-flex flex-column align-items-center"
+         *ngIf="(measurement$|async) as measurement;else loading">
+      <div class="last-update">
+        <span class="last-update__label">Last Update:</span>
+        <span>{{measurement.timeStamp|date:'medium'}}</span>
+      </div>
+      <app-measurement [measurement]="measurement"></app-measurement>
     </div>
-
   </div>
   <div class="row">
     <div class="col">
-      <app-measurements class="col-12 d-block"
-                        [measurements]="measurements$|async"></app-measurements>
+      <app-measurements class="col-12 d-lg-block d-sm-none"
+                        *ngIf="(measurements$|async) as measurements"
+                        [measurements]="measurements"></app-measurements>
     </div>
   </div>
 </div>
+<ng-template #loading>
+  <div class="col d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

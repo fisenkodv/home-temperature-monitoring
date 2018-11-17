@@ -34,7 +34,6 @@ import { States } from './store/module.store';
       disabled: environment.production,
     }),
     NgxsLoggerPluginModule.forRoot({ logger: console, collapsed: false }),
-
     HttpClientModule,
     MaterialModule,
     CoreModule,

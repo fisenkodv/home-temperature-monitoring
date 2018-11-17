@@ -37,4 +37,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
+
+  trackByDevice(device: Device) {
+    return device.uuid;
+  }
 }

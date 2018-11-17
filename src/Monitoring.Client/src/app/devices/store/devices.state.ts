@@ -10,6 +10,7 @@ import { LoadDevice, LoadDevices, LoadMeasurement, LoadMeasurements } from './de
 export interface DeviceItemStateModel {
   loading: boolean;
   name: string;
+  measurement: Measurement;
   measurements: Measurement[];
 }
 
@@ -41,7 +42,7 @@ export class DevicesState {
       [DevicesState],
       (state: DevicesStateModel) => {
         const device = state[deviceUuid];
-        return device.measurements ? device.measurements[0] : {};
+        return device && device.measurement ? device.measurement : undefined;
       }
     );
   }
@@ -51,7 +52,7 @@ export class DevicesState {
       [DevicesState],
       (state: DevicesStateModel) => {
         const device = state[deviceUuid];
-        return device.measurements.slice(1) || [];
+        return device && device.measurements ? device.measurements : undefined;
       }
     );
   }
@@ -90,7 +91,7 @@ export class DevicesState {
         measurements.forEach((measurement, index) => {
           const deviceUuid = ids[index];
           const device = state[deviceUuid];
-          device.measurements.splice(0, 1, measurement);
+          device.measurement = measurement;
 
           patchState({ [deviceUuid]: device });
         });
@@ -105,7 +106,7 @@ export class DevicesState {
       tap(measurements => {
         const state = getState();
         const device = state[deviceUuid];
-        device.measurements = [device.measurements[0], ...measurements];
+        device.measurements = measurements;
 
         patchState({ [deviceUuid]: device });
       }),
@@ -113,7 +114,7 @@ export class DevicesState {
     );
   }
 
-  private deviceToDeviceItemStateModel(device: Device, measurements: Measurement[] = []): DeviceItemStateModel {
-    return { loading: false, name: device.name, measurements: measurements };
+  private deviceToDeviceItemStateModel(device: Device): DeviceItemStateModel {
+    return { loading: false, name: device.name, measurement: null, measurements: [] };
   }
 }

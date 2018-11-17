@@ -1,18 +1,21 @@
-<mat-card class="mb-3"
-          *ngIf="(measurement$ | async) as measurement">
+<mat-card class="mb-3">
   <mat-card-header>
     <mat-card-title class="align-items-center d-flex">
       <span class="status"
-            [ngClass]="{'status--online': isOnline(measurement), 'status--offline': !isOnline(measurement)}"
-            *ngIf="!loading"></span>
+            *ngIf="hasData"
+            [ngClass]="{'status--online': isOnline(), 'status--offline': !isOnline()}"></span>
       {{device.name}}
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <app-measurement *ngIf="!loading"
+    <div class="d-flex justify-content-center"
+         *ngIf="!hasData">
+      <mat-spinner></mat-spinner>
+    </div>
+    <app-measurement *ngIf="hasData"
                      [measurement]="measurement"></app-measurement>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="hasData">
     <button mat-button
             [routerLink]="['/dashboard', device.uuid]">DETAILS</button>
   </mat-card-actions>

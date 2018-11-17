@@ -13,6 +13,7 @@ export class MeasurementsComponent implements OnInit {
   public lineChartLabels: Array<string> = [];
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
   @Input()
   set measurements(measurements: Measurement[]) {
     if (measurements && measurements.length) {
