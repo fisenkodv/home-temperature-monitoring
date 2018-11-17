@@ -1,13 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Logger } from '@app/core';
+import { DevicesState } from '@app/devices/store/devices.state';
+import { Store } from '@ngxs/store';
 import * as moment from 'moment';
-import { EMPTY, Subject, timer, Observable } from 'rxjs';
-import { catchError, takeUntil, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Device, Measurement } from '../../models';
-import { MeasurementsService } from '../../services';
-import { Store } from '@ngxs/store';
-import { DevicesState } from '@app/devices/store/devices.state';
 
 const logger = new Logger('Device');
 
@@ -25,14 +23,16 @@ export class DeviceCardComponent implements OnInit, OnDestroy {
   constructor(private store: Store) {}
 
   ngOnInit() {
-    this.measurement$ = this.store.select(
-      DevicesState.measurement(this.device.uuid)
-    );
+    this.measurement$ = this.store.select(DevicesState.measurement(this.device.uuid));
   }
 
   ngOnDestroy(): void {}
 
   private isOnline(measurement: Measurement): boolean {
-    return moment.utc().diff(moment(measurement.timeStamp).utc(), 'minutes') === 0;
+    const utcNow = moment.utc();
+    const measurementTimeStamp = moment(measurement.timeStamp).utc();
+    const diff = utcNow.diff(measurementTimeStamp, 'minutes');
+
+    return diff > 2;
   }
 }

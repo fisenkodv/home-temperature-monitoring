@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Monitoring.Business.Dto;
-using Monitoring.Business.Model;
 using Monitoring.Business.Service;
 
 namespace Monitoring.Api.Controllers

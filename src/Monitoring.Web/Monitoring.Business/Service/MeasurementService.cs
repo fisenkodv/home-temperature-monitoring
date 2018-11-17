@@ -12,7 +12,8 @@ namespace Monitoring.Business.Service
   [UsedImplicitly]
   public class MeasurementService
   {
-    private const int Threshold = 60; // each ~10 minutes 
+    private const int Threshold = 60; // each ~10 minutes
+    private const int MaximumNumberOfMeasurements = 500;
 
     private readonly IMemoryCache _memoryCache;
     private readonly IMeasurementRepository _measurementRepository;
@@ -60,14 +61,14 @@ namespace Monitoring.Business.Service
 
       var measurements = await _measurementRepository.GetMeasurements(deviceUuid, hours);
 
-      return FilterMeasurements(measurements);
+      return FilterMeasurements(measurements, MaximumNumberOfMeasurements);
     }
 
-    private IEnumerable<Measurement> FilterMeasurements(IEnumerable<Measurement> measurements, int maxItems = 500)
+    private static IEnumerable<Measurement> FilterMeasurements(IEnumerable<Measurement> measurements, int maxItems)
     {
       var measurementsList = measurements.OrderBy(x => x.TimeStamp).ToList();
       var timeDiff = measurementsList.Last().TimeStamp - measurementsList.First().TimeStamp;
-      var interval = timeDiff.Seconds / maxItems;
+      var interval = timeDiff.TotalSeconds / maxItems;
 
       var nextTimeStamp = measurementsList.First().TimeStamp.AddSeconds(interval);
       foreach (var measurement in measurementsList)

@@ -67,7 +67,7 @@ namespace Monitoring.Data.Repository
             measurements.time_stamp AS TimeStamp
           FROM measurements 
           INNER JOIN devices ON devices.id=measurements.device_id
-          WHERE devices.uuid=@DeviceUuid AND measurements.time_stamp > DATE_SUB(CURDATE(),INTERVAL @Hours HOUR) 
+          WHERE devices.uuid=@DeviceUuid AND measurements.time_stamp > DATE_SUB(CURRENT_TIMESTAMP(),INTERVAL @Hours HOUR) 
           ORDER BY measurements.time_stamp DESC";
 
         return await connection.QueryAsync<Measurement>(query, new {DeviceUuid = deviceUuid, Hours = hours});

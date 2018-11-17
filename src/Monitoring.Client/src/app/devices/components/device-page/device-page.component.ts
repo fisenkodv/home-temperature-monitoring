@@ -35,12 +35,6 @@ export class DevicePageComponent implements OnInit, OnDestroy {
     timer(0, this.FetchInterval)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(() => this.store.dispatch(new LoadMeasurement()));
-
-    // this.measurementsService
-    //   .getMeasurements(deviceUuid, 24)
-    //   .pipe(tap(measurements => (this.measurements = measurements)))
-    //   //finalize(() => (this.isLoading = false)),
-    //   .subscribe();
   }
 
   ngOnDestroy(): void {

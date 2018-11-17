@@ -8,25 +8,22 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
   styleUrls: ['./measurements.component.scss'],
 })
 export class MeasurementsComponent implements OnInit {
-  private cachedData: any = undefined;
+  public lineChartData: Array<any> = [[], []];
+  public lineChartOptions: any = { responsive: true };
+  public lineChartLabels: Array<string> = [];
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   @Input()
   set measurements(measurements: Measurement[]) {
     if (measurements && measurements.length) {
-      this.lineChartLabels = measurements.map(x => moment(x.timeStamp).format('LLL'));
+      this.lineChartLabels = measurements.map(x => moment(x.timeStamp).calendar());
       this.chart.chart.config.data.labels = this.lineChartLabels;
       const temperature = measurements.map(x => x.temperature);
       const heatIndex = measurements.map(x => x.heatIndex);
 
-      this.lineChartData = [{ data: temperature, label: 'temperature' }, { data: heatIndex, label: 'heat index' }];
+      this.lineChartData = [{ data: temperature, label: 'Temperature' }, { data: heatIndex, label: 'Heat Index' }];
     }
   }
-
-  public lineChartData: Array<any> = [[65, 59, 80, 81, 56, 55, 40], [28, 48, 40, 19, 86, 27, 90]];
-  public lineChartOptions: any = {
-    responsive: true,
-  };
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
   constructor() {}
 
