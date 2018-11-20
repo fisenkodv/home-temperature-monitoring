@@ -12,6 +12,7 @@ namespace Monitoring.Api
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
+      services.AddMemoryCache();
       services.AddCustomServices();
       services.AddSpaStaticFiles(configuration => configuration.RootPath = "wwwroot/");
     }
