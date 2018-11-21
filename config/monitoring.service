@@ -1,0 +1,14 @@
+[Unit]
+Description=Monitoring Web Application
+
+[Service]
+WorkingDirectory=/home/pi/monitoring/app
+ExecStart=/usr/local/bin/dotnet Monitoring.Api.dll
+Restart=always 
+RestartSec=10
+SyslogIdentifier=dotnet-core-app
+User=pi
+Environment=ASPNETCORE_ENVIRONMENT=Production 
+
+[Install]
+WantedBy=multi-user.target
