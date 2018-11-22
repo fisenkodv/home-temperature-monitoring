@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CoreModule } from '@app/core';
 import { MaterialModule } from '@app/material.module';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartsModule } from 'ng2-charts';
 
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
@@ -26,7 +25,6 @@ const COMPONENTS = [
     CommonModule,
     CoreModule,
     MaterialModule,
-    NgxChartsModule,
     ChartsModule,
     DevicesRoutingModule,
   ],
