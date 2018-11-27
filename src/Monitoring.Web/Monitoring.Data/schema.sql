@@ -30,7 +30,8 @@ ALTER TABLE `devices`
 --
 ALTER TABLE `measurements`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_DEVICES_ID` (`device_id`) USING BTREE;
+  ADD KEY `FK_DEVICES_ID` (`device_id`) USING BTREE,
+  ADD KEY `time_stamp` (`time_stamp`) USING BTREE;
 
 --
 -- Constraints for table `measurements`
