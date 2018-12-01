@@ -2,7 +2,4 @@
 
 cd app/
 
-dotnet Monitoring.Api.dll &
-cd ..
-sleep 10s
-python3 receiver.py --url "http://localhost:5000/api/measurements" &
+python3 receiver.py --url "http://192.168.1.2:5050/api/measurements" &
