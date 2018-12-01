@@ -12,7 +12,7 @@ RUN dotnet restore ./Monitoring.Api/Monitoring.Api.csproj
 COPY ./src/Monitoring.Web/ .
 RUN dotnet publish ./Monitoring.Api/Monitoring.Api.csproj -c release -o ../published
 
-FROM microsoft/dotnet:2.1-runtime
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 
 WORKDIR /root/
 COPY --from=builder /root/src/app/aspnetcoreapp/published .
