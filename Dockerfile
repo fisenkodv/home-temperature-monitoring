@@ -1,7 +1,16 @@
-FROM microsoft/dotnet:2.1-sdk as builder  
+FROM node:10.14.0 as node
 
-RUN mkdir -p /root/src/app/aspnetcoreapp
-WORKDIR /root/src/app/aspnetcoreapp
+WORKDIR /root/src/app/ui
+COPY ./src/Monitoring.Client/package*.json ./
+RUN npm install
+RUN npm install -g @angular/cli@7.0.1
+COPY ./src/Monitoring.Client/ .
+RUN ng build --prod --aot --extract-licenses false
+
+FROM microsoft/dotnet:2.1-sdk as builder
+
+RUN mkdir -p /root/src/app/api
+WORKDIR /root/src/app/api
 
 COPY ./src/Monitoring.Web/Monitoring.Api/Monitoring.Api.csproj ./Monitoring.Api/Monitoring.Api.csproj
 COPY ./src/Monitoring.Web/Monitoring.Business/Monitoring.Business.csproj ./Monitoring.Business/Monitoring.Business.csproj
@@ -15,8 +24,8 @@ RUN dotnet publish ./Monitoring.Api/Monitoring.Api.csproj -c release -o ../publi
 FROM microsoft/dotnet:2.1-aspnetcore-runtime
 
 WORKDIR /root/
-COPY --from=builder /root/src/app/aspnetcoreapp/published .
-COPY ./build/app/ ./wwwroot
+COPY --from=builder /root/src/app/api/published .
+COPY --from=node /root/src/app/ui/dist/client/ ./wwwroot
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000/tcp
 CMD ["dotnet", "./Monitoring.Api.dll"]

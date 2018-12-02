@@ -52,7 +52,8 @@ namespace Monitoring.Api
       return WebHost.CreateDefaultBuilder(args)
         .UseUrls("http://*:5000")
         .UseConfiguration(config)
-        .UseStartup<Startup>();
+        .UseStartup<Startup>()
+        .UseSerilog();
     }
   }
 }
