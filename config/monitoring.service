@@ -1,14 +1,13 @@
 [Unit]
-Description=Monitoring Web Application
+Description=Monitoring Receiver
 
 [Service]
-WorkingDirectory=/home/pi/monitoring/app
-ExecStart=/usr/local/bin/dotnet Monitoring.Api.dll
+WorkingDirectory=/home/pi
+ExecStart=python3 receiver.py --url "http://192.168.1.2:5050/api/measurements"
 Restart=always 
 RestartSec=10
-SyslogIdentifier=dotnet-core-app
+SyslogIdentifier=monitoring-receiver
 User=pi
-Environment=ASPNETCORE_ENVIRONMENT=Production 
 
 [Install]
 WantedBy=multi-user.target
