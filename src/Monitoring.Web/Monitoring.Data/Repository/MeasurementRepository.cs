@@ -49,7 +49,7 @@ namespace Monitoring.Data.Repository
           FROM measurements 
           INNER JOIN devices ON devices.id=measurements.device_id
           WHERE devices.uuid=@DeviceUuid
-          ORDER BY measurements.time_stamp DESC
+          ORDER BY measurements.id DESC
           LIMIT 1";
 
         return await connection.QueryFirstOrDefaultAsync<Measurement>(query, new {DeviceUuid = deviceUuid});

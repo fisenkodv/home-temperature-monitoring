@@ -2,8 +2,8 @@
 Description=Monitoring Receiver
 
 [Service]
-WorkingDirectory=/home/pi
-ExecStart=python3 receiver.py --url "http://192.168.1.2:5050/api/measurements"
+WorkingDirectory=/home/pi/monitoring
+ExecStart=/usr/bin/python3 receiver.py --url "http://192.168.1.2:5050/api/measurements"
 Restart=always 
 RestartSec=10
 SyslogIdentifier=monitoring-receiver
