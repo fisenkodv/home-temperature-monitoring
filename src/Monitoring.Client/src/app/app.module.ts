@@ -1,5 +1,5 @@
-import 'hammerjs';
 import 'chart.js';
+import 'hammerjs';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -17,6 +17,7 @@ import { AboutModule } from './about/about.module';
 import { AppRoutingModule } from './app-routing.module';
 import { DevicesModule } from './devices/devices.module';
 import { MaterialModule } from './material.module';
+import { SettingsModule } from './settings/settings.module';
 import { AppComponent } from './shell/components/app/app.component';
 import { ShellModule } from './shell/shell.module';
 import { States } from './store/module.store';
@@ -40,6 +41,7 @@ import { States } from './store/module.store';
     ShellModule,
     DevicesModule,
     AboutModule,
+    SettingsModule,
     AppRoutingModule,
   ],
   providers: [],
