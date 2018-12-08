@@ -6,7 +6,7 @@ CREATE TABLE `devices` (
   `id` int(11) NOT NULL,
   `uuid` varchar(36) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `is_active` tinyint(4) NOT NULL
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 

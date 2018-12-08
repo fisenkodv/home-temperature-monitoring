@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Monitoring.Business.Abstract.Repository;
@@ -21,9 +22,11 @@ namespace Monitoring.Business.Service
       return _deviceRepository.GetDevice(deviceUuid);
     }
 
-    public Task<IEnumerable<Device>> GetDevices()
+    public async Task<IEnumerable<Device>> GetDevices(bool isActive)
     {
-      return _deviceRepository.GetDevices();
+      var devices = await _deviceRepository.GetDevices();
+
+      return devices.Where(x => !isActive || x.IsActive);
     }
   }
 }

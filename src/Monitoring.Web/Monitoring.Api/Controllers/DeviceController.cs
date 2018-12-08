@@ -18,9 +18,9 @@ namespace Monitoring.Api.Controllers
     }
 
     [HttpGet]
-    public async Task<IEnumerable<DeviceDto>> GetAllDevices()
+    public async Task<IEnumerable<DeviceDto>> GetDevices(bool active)
     {
-      var devices = await _deviceService.GetDevices();
+      var devices = await _deviceService.GetDevices(active);
       return devices.Select(DeviceDto.FromModel);
     }
 

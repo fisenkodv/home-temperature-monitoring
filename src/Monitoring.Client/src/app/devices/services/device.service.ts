@@ -8,11 +8,11 @@ import { Device } from '../models';
 export class DeviceService {
   constructor(private httpClient: HttpClient) {}
 
-  getAll(): Observable<Device[]> {
-    return this.httpClient.get<Device[]>('/devices');
+  getDevices(isActive: boolean): Observable<Device[]> {
+    return this.httpClient.get<Device[]>(`/devices?active=${isActive}`);
   }
 
-  get(deviceUuid: string): Observable<Device> {
+  getDevice(deviceUuid: string): Observable<Device> {
     return this.httpClient.get<Device>(`/devices/${deviceUuid}`);
   }
 }

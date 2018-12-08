@@ -62,7 +62,7 @@ export class DevicesState {
   @Action(LoadDevices)
   loadDevices({ patchState, dispatch }: StateContext<DevicesStateModel>) {
     dispatch(new SetLoading(true));
-    return this.deviceService.getAll().pipe(
+    return this.deviceService.getDevices(true).pipe(
       map(devices =>
         devices.forEach(x => {
           const model = this.deviceToDeviceItemStateModel(x);
@@ -76,7 +76,7 @@ export class DevicesState {
   @Action(LoadDevice)
   loadDevice({ patchState, dispatch }: StateContext<DevicesStateModel>, { deviceUuid }: LoadDevice) {
     dispatch(new SetLoading(true));
-    return this.deviceService.get(deviceUuid).pipe(
+    return this.deviceService.getDevice(deviceUuid).pipe(
       map(device => patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })),
       finalize(() => dispatch(new SetLoading(false)))
     );
