@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Measurement } from '../models';
-import { MeasurementDto } from './dto';
+import { Measurement, MeasurementDto } from '../models';
 
 @Injectable()
 export class MeasurementsService {

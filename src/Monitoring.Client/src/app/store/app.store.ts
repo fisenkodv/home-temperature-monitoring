@@ -1,3 +1,4 @@
+import { SettingsState } from '@app/settings/store/settings.state';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 import { DevicesState } from '../devices/store/devices.state';
@@ -12,7 +13,7 @@ export interface ApplicationStateModel {
   defaults: {
     loading: false,
   },
-  children: [DevicesState],
+  children: [DevicesState, SettingsState],
 })
 export class ApplicationState {
   @Selector()
@@ -21,10 +22,7 @@ export class ApplicationState {
   }
 
   @Action(SetLoading)
-  setLoading(
-    { patchState }: StateContext<ApplicationStateModel>,
-    { loading }: SetLoading
-  ) {
+  setLoading({ patchState }: StateContext<ApplicationStateModel>, { loading }: SetLoading) {
     patchState({ loading: loading });
   }
 }

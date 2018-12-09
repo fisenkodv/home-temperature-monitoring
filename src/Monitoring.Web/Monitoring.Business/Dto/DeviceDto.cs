@@ -13,9 +13,14 @@ namespace Monitoring.Business.Dto
     [JsonProperty("name")]
     public string Name { get; set; }
 
+    [JsonProperty("is_active")]
+    public bool IsActive { get; set; }
+
     public static DeviceDto FromModel(Device device)
     {
-      return device != null ? new DeviceDto {Uuid = device.Uuid, Name = device.Name} : default(DeviceDto);
+      return device != null
+        ? new DeviceDto {Uuid = device.Uuid, Name = device.Name, IsActive = device.IsActive}
+        : default(DeviceDto);
     }
   }
 }

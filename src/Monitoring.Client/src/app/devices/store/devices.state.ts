@@ -25,14 +25,14 @@ export interface DevicesStateModel {
 export class DevicesState {
   @Selector()
   static devices(state: DevicesStateModel): Device[] {
-    return Object.keys(state).map(deviceUuid => <Device>{ ...state[deviceUuid], uuid: deviceUuid });
+    return Object.keys(state).map(deviceUuid => <Device>{ ...state[deviceUuid], uuid: deviceUuid, isActive: true });
   }
 
   static device(deviceUuid: string) {
     return createSelector(
       [DevicesState],
       (state: DevicesStateModel) => {
-        return <Device>{ ...state[deviceUuid], uuid: deviceUuid };
+        return <Device>{ ...state[deviceUuid], uuid: deviceUuid, isActive: true };
       }
     );
   }

@@ -11,9 +11,9 @@ export class DeviceSettingsComponent implements OnInit {
 
   constructor() {
     this.devices = [
-      { uuid: '123', name: "Dmitry's Room" },
-      { uuid: '456', name: "Dmitry's Room" },
-      { uuid: '789', name: "Dmitry's Room" },
+      { uuid: '123', name: "Dmitry's Room", isActive: true },
+      { uuid: '456', name: "Dmitry's Room", isActive: true },
+      { uuid: '789', name: "Dmitry's Room", isActive: true },
     ];
   }
 

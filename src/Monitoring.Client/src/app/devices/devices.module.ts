@@ -10,7 +10,7 @@ import { DevicePageComponent } from './components/device-page/device-page.compon
 import { MeasurementComponent } from './components/measurement/measurement.component';
 import { MeasurementsComponent } from './components/measurements/measurements.component';
 import { DevicesRoutingModule } from './devices-routing.module';
-import { DeviceService, MeasurementsService } from './services';
+import { MeasurementsService } from './services';
 
 const COMPONENTS = [
   DashboardPageComponent,
@@ -29,6 +29,6 @@ const COMPONENTS = [
     DevicesRoutingModule,
   ],
   declarations: COMPONENTS,
-  providers: [MeasurementsService, DeviceService],
+  providers: [MeasurementsService],
 })
 export class DevicesModule {}

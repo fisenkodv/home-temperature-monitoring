@@ -21,6 +21,7 @@ import { SettingsModule } from './settings/settings.module';
 import { AppComponent } from './shell/components/app/app.component';
 import { ShellModule } from './shell/shell.module';
 import { States } from './store/module.store';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { States } from './store/module.store';
     HttpClientModule,
     MaterialModule,
     CoreModule,
+    SharedModule,
     ShellModule,
     DevicesModule,
     AboutModule,
