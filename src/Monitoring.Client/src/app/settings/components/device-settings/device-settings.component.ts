@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from '@app/devices/models';
+import { Select } from '@ngxs/store';
+import { SettingsState } from '@app/settings/store/settings.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-device-settings',
@@ -7,15 +10,9 @@ import { Device } from '@app/devices/models';
   styleUrls: ['./device-settings.component.scss'],
 })
 export class DeviceSettingsComponent implements OnInit {
-  devices: Device[];
+  @Select(SettingsState.devices) devices$: Observable<Device[]>;
 
-  constructor() {
-    this.devices = [
-      { uuid: '123', name: "Dmitry's Room", isActive: true },
-      { uuid: '456', name: "Dmitry's Room", isActive: true },
-      { uuid: '789', name: "Dmitry's Room", isActive: true },
-    ];
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 }

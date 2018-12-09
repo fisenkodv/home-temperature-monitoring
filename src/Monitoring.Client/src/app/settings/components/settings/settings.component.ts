@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { LoadSettings } from '@app/settings/store/settings.actions';
 
 @Component({
   selector: 'app-settings',
@@ -6,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store) {
+    this.store.dispatch(new LoadSettings());
+  }
 
   ngOnInit(): void {}
 }

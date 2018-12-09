@@ -1,3 +1,13 @@
 :host {
   flex: 1 1 auto;
 }
+
+.device {
+  &:not(:first-child){
+    padding-top: 15px;
+  }
+
+  &__id{
+    font-size: smaller;
+  }
+}
