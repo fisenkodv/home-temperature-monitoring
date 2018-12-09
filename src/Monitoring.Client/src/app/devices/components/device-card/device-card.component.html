@@ -10,7 +10,7 @@
   <mat-card-content>
     <div class="d-flex justify-content-center"
          *ngIf="!hasData">
-      <mat-spinner></mat-spinner>
+      <mat-progress-bar mode="query"></mat-progress-bar>
     </div>
     <app-measurement *ngIf="hasData"
                      [measurement]="measurement"></app-measurement>

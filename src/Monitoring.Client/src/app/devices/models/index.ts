@@ -1,2 +1,2 @@
-export * from './device.model';
+export * from '../../shared/models';
 export * from './measurement.model';
