@@ -26,6 +26,7 @@ FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /root/
 COPY --from=builder /root/src/app/api/published .
 COPY --from=node /root/src/app/ui/dist/client/ ./wwwroot
+ENV ASPNETCORE_ENVIRONMENT=Production
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000/tcp
 CMD ["dotnet", "./Monitoring.Api.dll"]
