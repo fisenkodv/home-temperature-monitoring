@@ -5,30 +5,32 @@
   <mat-card-content>
     <form>
       <div class="device"
-           *ngFor="let device of devices$|async">
+           *ngFor="let device of devices">
         <div class="text-muted font-weight-light text-muted col pl-0 pb-1 col device__id">
-          <span>Device UUID:</span>{{device.uuid}}
+          <span>Device UUID: </span>{{device.uuid}}
         </div>
         <div class="row">
           <mat-form-field class="col-10">
             <input matInput
                    maxlength="256"
                    placeholder="Message"
-                   value="{{device.name}}">
+                   [(ngModel)]="device.name"
+                   [ngModelOptions]="{standalone: true}">
           </mat-form-field>
           <div class="align-items-center col-2 d-flex">
             <mat-checkbox [labelPosition]="'after'"
-                          [checked]="device.isActive">
+                          [checked]="device.isActive"
+                          (change)="onChangeDeviceActivity(device)">
               Is Active
             </mat-checkbox>
           </div>
         </div>
         <mat-divider></mat-divider>
       </div>
-
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>SAVE</button>
+    <button mat-button
+            (click)="onSaveClick()">SAVE</button>
   </mat-card-actions>
 </mat-card>

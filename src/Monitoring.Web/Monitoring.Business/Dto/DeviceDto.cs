@@ -22,5 +22,10 @@ namespace Monitoring.Business.Dto
         ? new DeviceDto {Uuid = device.Uuid, Name = device.Name, IsActive = device.IsActive}
         : default(DeviceDto);
     }
+
+    public Device ToModel()
+    {
+      return new Device {IsActive = IsActive, Name = Name, Uuid = Uuid};
+    }
   }
 }

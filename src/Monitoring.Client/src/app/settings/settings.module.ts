@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core';
 import { MaterialModule } from '@app/material.module';
 
@@ -11,7 +12,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 const COMPONENTS = [SettingsComponent, DeviceSettingsComponent, NavigationComponent];
 
 @NgModule({
-  imports: [CommonModule, CoreModule, MaterialModule, SettingsRoutingModule],
+  imports: [CommonModule, FormsModule, CoreModule, MaterialModule, SettingsRoutingModule],
   declarations: COMPONENTS,
   providers: [],
 })

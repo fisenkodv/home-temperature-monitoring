@@ -28,5 +28,11 @@ namespace Monitoring.Business.Service
 
       return devices.Where(x => !isActive || x.IsActive);
     }
+
+    public Task UpdateDevices(IEnumerable<Device> devices)
+    {
+      var tasks = devices.Select(x => _deviceRepository.UpdateDevice(x));
+      return Task.WhenAll(tasks);
+    }
   }
 }

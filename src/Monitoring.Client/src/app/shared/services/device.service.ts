@@ -18,4 +18,8 @@ export class DeviceService {
   getDevice(deviceUuid: string): Observable<Device> {
     return this.httpClient.get<DeviceDto>(`/devices/${deviceUuid}`).pipe(map(Device.fromDto));
   }
+
+  saveSettings(devices: Device[]) {
+    return this.httpClient.post('/devices', devices.map(DeviceDto.fromModel));
+  }
 }

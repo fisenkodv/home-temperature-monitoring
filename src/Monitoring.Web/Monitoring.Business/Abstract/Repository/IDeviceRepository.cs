@@ -9,5 +9,6 @@ namespace Monitoring.Business.Abstract.Repository
     Task<IEnumerable<Device>> GetDevices();
     Task<Device> GetDevice(string deviceUuid);
     Task<int> CreateDevice(string deviceUuid, string name, bool isActive);
+    Task UpdateDevice(Device device);
   }
 }

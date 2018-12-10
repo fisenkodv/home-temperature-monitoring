@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { LoadSettings } from '@app/settings/store/settings.actions';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-settings',

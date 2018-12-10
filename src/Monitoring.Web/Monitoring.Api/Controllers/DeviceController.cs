@@ -30,5 +30,11 @@ namespace Monitoring.Api.Controllers
       var device = await _deviceService.GetDevice(deviceUuid);
       return DeviceDto.FromModel(device);
     }
+
+    [HttpPost]
+    public Task UpdateDevices([FromBody] IEnumerable<DeviceDto> devices)
+    {
+      return _deviceService.UpdateDevices(devices.Select(x => x.ToModel()));
+    }
   }
 }

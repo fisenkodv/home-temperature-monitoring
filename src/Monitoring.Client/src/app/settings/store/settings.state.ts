@@ -4,7 +4,7 @@ import { SetLoading } from '@app/store/app.actions';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { finalize, tap } from 'rxjs/operators';
 
-import { LoadSettings } from './settings.actions';
+import { LoadSettings, SaveSettings } from './settings.actions';
 
 export interface SettingsStateModel {
   devices: Device[];
@@ -25,10 +25,19 @@ export class SettingsState {
   constructor(private deviceService: DeviceService) {}
 
   @Action(LoadSettings)
-  loadDevices({ patchState, dispatch }: StateContext<SettingsStateModel>) {
+  loadSettings({ patchState, dispatch }: StateContext<SettingsStateModel>) {
     dispatch(new SetLoading(true));
     return this.deviceService.getDevices(false).pipe(
       tap(devices => patchState({ devices: devices })),
+      finalize(() => dispatch(new SetLoading(false)))
+    );
+  }
+
+  @Action(SaveSettings)
+  saveSettings({ patchState, dispatch }: StateContext<SettingsStateModel>, { devices }: SaveSettings) {
+    dispatch(new SetLoading(true));
+    return this.deviceService.saveSettings(devices).pipe(
+      tap(() => patchState({ devices: devices })),
       finalize(() => dispatch(new SetLoading(false)))
     );
   }

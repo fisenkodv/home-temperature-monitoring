@@ -1,7 +1,15 @@
-export interface DeviceDto {
+export class DeviceDto {
   uuid: string;
   name: string;
   is_active: boolean;
+
+  static fromModel(dto: Device): DeviceDto {
+    return {
+      uuid: dto.uuid,
+      name: dto.name,
+      is_active: dto.isActive,
+    };
+  }
 }
 
 export class Device {
@@ -13,7 +21,7 @@ export class Device {
     return {
       uuid: dto.uuid,
       name: dto.name,
-      isActive: dto.is_active
+      isActive: dto.is_active,
     };
   }
 }

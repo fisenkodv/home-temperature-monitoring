@@ -50,5 +50,17 @@ namespace Monitoring.Data.Repository
           new {DeviceUuid = deviceUuid, Name = name, IsActive = isActive});
       }
     }
+
+    public async Task UpdateDevice(Device device)
+    {
+      using (var connection = ConnectionHelper.GetConnection(_configuration))
+      {
+        const string query = @"
+          UPDATE devices SET name=@Name, is_active=@IsActive
+          WHERE uuid=@DeviceUuid;";
+
+        await connection.ExecuteAsync(query, new {DeviceUuid = device.Uuid, device.Name, device.IsActive});
+      }
+    }
   }
 }
