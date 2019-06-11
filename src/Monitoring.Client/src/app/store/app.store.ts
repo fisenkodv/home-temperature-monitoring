@@ -23,6 +23,6 @@ export class ApplicationState {
 
   @Action(SetLoading)
   setLoading({ patchState }: StateContext<ApplicationStateModel>, { loading }: SetLoading) {
-    patchState({ loading: loading });
+    patchState({ loading });
   }
 }

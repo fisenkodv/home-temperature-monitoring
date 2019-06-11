@@ -1,6 +1,6 @@
 import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
 import { forkJoin } from 'rxjs';
-import { finalize, map, tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 
 import { SetLoading } from '../../store/app.actions';
 import { Device, Measurement } from '../models';
@@ -60,15 +60,17 @@ export class DevicesState {
   constructor(private deviceService: DeviceService, private measurementService: MeasurementsService) {}
 
   @Action(LoadDevices)
-  loadDevices({ patchState, dispatch }: StateContext<DevicesStateModel>) {
+  loadDevices({ setState, dispatch }: StateContext<DevicesStateModel>) {
     dispatch(new SetLoading(true));
     return this.deviceService.getDevices(true).pipe(
-      map(devices =>
-        devices.forEach(x => {
-          const model = this.deviceToDeviceItemStateModel(x);
-          patchState({ [x.uuid]: model });
-        })
-      ),
+      tap(devices => {
+        const state = {};
+        for (const device of devices) {
+          const model = this.deviceToDeviceItemStateModel(device);
+          state[device.uuid] = model;
+        }
+        setState(state);
+      }),
       finalize(() => dispatch(new SetLoading(false)))
     );
   }
@@ -77,7 +79,7 @@ export class DevicesState {
   loadDevice({ patchState, dispatch }: StateContext<DevicesStateModel>, { deviceUuid }: LoadDevice) {
     dispatch(new SetLoading(true));
     return this.deviceService.getDevice(deviceUuid).pipe(
-      map(device => patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })),
+      tap(device => patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })),
       finalize(() => dispatch(new SetLoading(false)))
     );
   }

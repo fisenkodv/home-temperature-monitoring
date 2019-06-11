@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Measurement } from '@app/devices/models';
 import * as moment from 'moment';
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { BaseChartDirective } from 'ng2-charts';
+
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.component.html',
@@ -12,7 +13,7 @@ export class MeasurementsComponent implements OnInit {
   public lineChartOptions: any = { responsive: true };
   public lineChartLabels: Array<string> = [];
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective, { static: false }) chart: BaseChartDirective;
 
   @Input()
   set measurements(measurements: Measurement[]) {

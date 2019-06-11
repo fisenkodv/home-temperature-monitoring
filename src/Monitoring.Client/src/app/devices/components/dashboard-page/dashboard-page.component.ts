@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, timer, Subject } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss'],
 })
-export class DashboardPageComponent implements OnInit, OnDestroy {
+export class DashboardPageComponent implements AfterViewInit, OnDestroy {
   private FetchInterval = 10000;
   private unsubscribe: Subject<void> = new Subject();
 
@@ -25,12 +25,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store) {}
 
-  ngOnInit() {
-    this.store.dispatch(new LoadDevices());
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.store.dispatch(new LoadDevices());
 
-    timer(0, this.FetchInterval)
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(() => this.store.dispatch(new LoadMeasurement()));
+      timer(0, this.FetchInterval)
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe(() => this.store.dispatch(new LoadMeasurement()));
+    });
   }
 
   ngOnDestroy(): void {

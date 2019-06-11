@@ -10,8 +10,6 @@ const log = new Logger('App');
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
-
   ngOnInit() {
     if (environment.production) {
       Logger.enableProductionMode();
