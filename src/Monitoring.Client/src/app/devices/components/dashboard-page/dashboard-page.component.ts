@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { Observable, timer, Subject } from 'rxjs';
+import { Observable, Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ApplicationState } from '../../../store/app.store';
 import { Device } from '../../models';
 import { LoadDevices, LoadMeasurement } from '../../store/devices.actions';
 import { DevicesState } from '../../store/devices.state';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-page',
