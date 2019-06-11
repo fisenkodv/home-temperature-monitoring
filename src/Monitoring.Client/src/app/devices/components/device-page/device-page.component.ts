@@ -1,12 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { tap, takeUntil } from 'rxjs/operators';
-import { Measurement, Device } from '@app/devices/models';
-import { MeasurementsService } from '@app/devices/services';
-import { Store } from '@ngxs/store';
+import { Device, Measurement } from '@app/devices/models';
 import { LoadDevice, LoadMeasurement, LoadMeasurements } from '@app/devices/store/devices.actions';
-import { Observable, timer, Subject } from 'rxjs';
 import { DevicesState } from '@app/devices/store/devices.state';
+import { Store } from '@ngxs/store';
+import { Observable, Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-device-page',
@@ -30,11 +29,13 @@ export class DevicePageComponent implements OnInit, OnDestroy {
     this.measurement$ = this.store.select(DevicesState.measurement(deviceUuid));
     this.measurements$ = this.store.select(DevicesState.measurements(deviceUuid));
 
-    this.store.dispatch(new LoadDevice(deviceUuid));
-    this.store.dispatch(new LoadMeasurements(deviceUuid, 24));
-    timer(0, this.FetchInterval)
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(() => this.store.dispatch(new LoadMeasurement()));
+    setTimeout(() => {
+      this.store.dispatch(new LoadDevice(deviceUuid));
+      this.store.dispatch(new LoadMeasurements(deviceUuid, 24));
+      timer(0, this.FetchInterval)
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe(() => this.store.dispatch(new LoadMeasurement()));
+    });
   }
 
   ngOnDestroy(): void {

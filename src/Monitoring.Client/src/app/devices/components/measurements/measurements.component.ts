@@ -1,17 +1,18 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Measurement } from '@app/devices/models';
 import * as moment from 'moment';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, Label } from 'ng2-charts';
+import { ChartDataSets, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.component.html',
   styleUrls: ['./measurements.component.scss'],
 })
-export class MeasurementsComponent implements OnInit {
-  public lineChartData: Array<any> = [[], []];
-  public lineChartOptions: any = { responsive: true };
-  public lineChartLabels: Array<string> = [];
+export class MeasurementsComponent {
+  public lineChartData: ChartDataSets[] = [{ data: [], label: 'Temperature' }, { data: [], label: 'Heat Index' }];
+  public lineChartOptions: ChartOptions = { responsive: true };
+  public lineChartLabels: Label[] = [];
 
   @ViewChild(BaseChartDirective, { static: false }) chart: BaseChartDirective;
 
@@ -19,15 +20,11 @@ export class MeasurementsComponent implements OnInit {
   set measurements(measurements: Measurement[]) {
     if (measurements && measurements.length) {
       this.lineChartLabels = measurements.map(x => moment(x.timeStamp).calendar());
-      this.chart.chart.config.data.labels = this.lineChartLabels;
       const temperature = measurements.map(x => x.temperature);
       const heatIndex = measurements.map(x => x.heatIndex);
 
-      this.lineChartData = [{ data: temperature, label: 'Temperature' }, { data: heatIndex, label: 'Heat Index' }];
+      this.lineChartData[0].data = temperature;
+      this.lineChartData[1].data = heatIndex;
     }
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
