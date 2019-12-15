@@ -7,34 +7,34 @@ using Monitoring.Business.Service;
 
 namespace Monitoring.Api.Controllers
 {
-  [Route("api/measurements")]
-  public class MeasurementController : Controller
-  {
-    private readonly MeasurementService _measurementService;
-
-    public MeasurementController(MeasurementService measurementService)
+    [Route("api/measurements")]
+    public class MeasurementController : Controller
     {
-      _measurementService = measurementService;
-    }
+        private readonly MeasurementService _measurementService;
 
-    [HttpPost]
-    public Task Create([FromBody] CreateMeasurementDto dto)
-    {
-      return _measurementService.CreateMeasurement(dto.DeviceUuid, dto.Temperature, dto.Humidity);
-    }
+        public MeasurementController(MeasurementService measurementService)
+        {
+            _measurementService = measurementService;
+        }
 
-    [HttpGet("{deviceUuid}/{hours}")]
-    public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, int hours)
-    {
-      var measurements = await _measurementService.GetMeasurements(deviceUuid, hours );
-      return measurements.Select(MeasurementDto.FromModel);
-    }
+        [HttpPost]
+        public Task Create([FromBody] CreateMeasurementDto dto)
+        {
+            return _measurementService.CreateMeasurement(dto.DeviceUuid, dto.Temperature, dto.Humidity);
+        }
 
-    [HttpGet("{deviceUuid}")]
-    public async Task<MeasurementDto> GetLatestMeasurement(string deviceUuid)
-    {
-      var measurement = await _measurementService.GetLatestMeasurement(deviceUuid);
-      return MeasurementDto.FromModel(measurement);
+        [HttpGet("{deviceUuid}/{hours}")]
+        public async Task<IEnumerable<MeasurementDto>> GetMeasurements(string deviceUuid, int hours)
+        {
+            var measurements = await _measurementService.GetMeasurements(deviceUuid, hours);
+            return measurements.Select(MeasurementDto.FromModel);
+        }
+
+        [HttpGet("{deviceUuid}")]
+        public async Task<MeasurementDto> GetLatestMeasurement(string deviceUuid)
+        {
+            var measurement = await _measurementService.GetLatestMeasurement(deviceUuid);
+            return MeasurementDto.FromModel(measurement);
+        }
     }
-  }
 }

@@ -4,27 +4,27 @@ using MySql.Data.MySqlClient;
 
 namespace Monitoring.Data
 {
-  internal static class ConnectionHelper
-  {
-    public static DbConnection GetConnection(IConfiguration configuration)
+    internal static class ConnectionHelper
     {
-      var connectionString = configuration.GetConnectionString("Monitoring");
-      return GetConnection(connectionString);
+        public static DbConnection GetConnection(IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("Monitoring");
+            return GetConnection(connectionString);
+        }
+
+        private static DbConnection GetConnection(string connectionString)
+        {
+            var connectionStringBuilder = new MySqlConnectionStringBuilder(connectionString)
+            {
+                AllowZeroDateTime = false,
+                ConvertZeroDateTime = false,
+                Pooling = true
+            };
+
+            var connection = new MySqlConnection(connectionStringBuilder.ConnectionString);
+            connection.Open();
+
+            return connection;
+        }
     }
-
-    private static DbConnection GetConnection(string connectionString)
-    {
-      var connectionStringBuilder = new MySqlConnectionStringBuilder(connectionString)
-      {
-        AllowZeroDateTime = false,
-        ConvertZeroDateTime = false,
-        Pooling = true
-      };
-
-      var connection = new MySqlConnection(connectionStringBuilder.ConnectionString);
-      connection.Open();
-
-      return connection;
-    }
-  }
 }

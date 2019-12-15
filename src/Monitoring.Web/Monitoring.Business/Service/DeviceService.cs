@@ -7,32 +7,32 @@ using Monitoring.Business.Model;
 
 namespace Monitoring.Business.Service
 {
-  [UsedImplicitly]
-  public class DeviceService
-  {
-    private readonly IDeviceRepository _deviceRepository;
-
-    public DeviceService(IDeviceRepository deviceRepository)
+    [UsedImplicitly]
+    public class DeviceService
     {
-      _deviceRepository = deviceRepository;
-    }
+        private readonly IDeviceRepository _deviceRepository;
 
-    public Task<Device> GetDevice(string deviceUuid)
-    {
-      return _deviceRepository.GetDevice(deviceUuid);
-    }
+        public DeviceService(IDeviceRepository deviceRepository)
+        {
+            _deviceRepository = deviceRepository;
+        }
 
-    public async Task<IEnumerable<Device>> GetDevices(bool isActive)
-    {
-      var devices = await _deviceRepository.GetDevices();
+        public Task<Device> GetDevice(string deviceUuid)
+        {
+            return _deviceRepository.GetDevice(deviceUuid);
+        }
 
-      return devices.Where(x => !isActive || x.IsActive);
-    }
+        public async Task<IEnumerable<Device>> GetDevices(bool isActive)
+        {
+            var devices = await _deviceRepository.GetDevices();
 
-    public Task UpdateDevices(IEnumerable<Device> devices)
-    {
-      var tasks = devices.Select(x => _deviceRepository.UpdateDevice(x));
-      return Task.WhenAll(tasks);
+            return devices.Where(x => !isActive || x.IsActive);
+        }
+
+        public Task UpdateDevices(IEnumerable<Device> devices)
+        {
+            var tasks = devices.Select(x => _deviceRepository.UpdateDevice(x));
+            return Task.WhenAll(tasks);
+        }
     }
-  }
 }

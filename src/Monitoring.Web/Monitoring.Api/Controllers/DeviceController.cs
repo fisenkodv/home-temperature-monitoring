@@ -7,34 +7,34 @@ using Monitoring.Business.Service;
 
 namespace Monitoring.Api.Controllers
 {
-  [Route("api/devices")]
-  public class DeviceController : Controller
-  {
-    private readonly DeviceService _deviceService;
-
-    public DeviceController(DeviceService deviceService)
+    [Route("api/devices")]
+    public class DeviceController : Controller
     {
-      _deviceService = deviceService;
-    }
+        private readonly DeviceService _deviceService;
 
-    [HttpGet]
-    public async Task<IEnumerable<DeviceDto>> GetDevices(bool active)
-    {
-      var devices = await _deviceService.GetDevices(active);
-      return devices.Select(DeviceDto.FromModel);
-    }
+        public DeviceController(DeviceService deviceService)
+        {
+            _deviceService = deviceService;
+        }
 
-    [HttpGet("{deviceUuid}")]
-    public async Task<DeviceDto> GetDevice(string deviceUuid)
-    {
-      var device = await _deviceService.GetDevice(deviceUuid);
-      return DeviceDto.FromModel(device);
-    }
+        [HttpGet]
+        public async Task<IEnumerable<DeviceDto>> GetDevices(bool active)
+        {
+            var devices = await _deviceService.GetDevices(active);
+            return devices.Select(DeviceDto.FromModel);
+        }
 
-    [HttpPost]
-    public Task UpdateDevices([FromBody] IEnumerable<DeviceDto> devices)
-    {
-      return _deviceService.UpdateDevices(devices.Select(x => x.ToModel()));
+        [HttpGet("{deviceUuid}")]
+        public async Task<DeviceDto> GetDevice(string deviceUuid)
+        {
+            var device = await _deviceService.GetDevice(deviceUuid);
+            return DeviceDto.FromModel(device);
+        }
+
+        [HttpPost]
+        public Task UpdateDevices([FromBody] IEnumerable<DeviceDto> devices)
+        {
+            return _deviceService.UpdateDevices(devices.Select(x => x.ToModel()));
+        }
     }
-  }
 }
