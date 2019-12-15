@@ -29,7 +29,7 @@ namespace Monitoring.Api
             {
                 spa.Options.SourcePath = "wwwroot";
                 if (env.IsDevelopment()) spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-            });
+            });    
         }
     }
 }

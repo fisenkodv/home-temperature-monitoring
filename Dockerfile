@@ -7,7 +7,7 @@ RUN npm install -g @angular/cli@7.0.1
 COPY ./src/Monitoring.Client/ .
 RUN ng build --prod --aot --extract-licenses false
 
-FROM microsoft/dotnet:2.1-sdk as builder
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder
 
 RUN mkdir -p /root/src/app/api
 WORKDIR /root/src/app/api
@@ -21,12 +21,12 @@ RUN dotnet restore ./Monitoring.Api/Monitoring.Api.csproj
 COPY ./src/Monitoring.Web/ .
 RUN dotnet publish ./Monitoring.Api/Monitoring.Api.csproj -c release -o ../published
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 
 WORKDIR /root/
 COPY --from=builder /root/src/app/api/published .
 COPY --from=node /root/src/app/ui/dist/client/ ./wwwroot
-ENV ConnectionStrings__Monitoring=
+ENV ConnectionStrings__Monitoring=""
 ENV ASPNETCORE_ENVIRONMENT=production
 ENV ASPNETCORE_URLS=http://+:5000
 EXPOSE 5000/tcp
