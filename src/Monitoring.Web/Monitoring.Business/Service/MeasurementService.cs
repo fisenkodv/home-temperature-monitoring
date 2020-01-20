@@ -12,7 +12,7 @@ namespace Monitoring.Business.Service
     [UsedImplicitly]
     public class MeasurementService
     {
-        private const int Threshold = 60; // each ~10 minutes
+        private const int Threshold = 10; // each device sends measurement each 10 seconds, i.e. persist data each ~10*10/60 seconds
         private const int MaximumNumberOfMeasurements = 500;
         private readonly IDeviceRepository _deviceRepository;
         private readonly IMeasurementRepository _measurementRepository;
