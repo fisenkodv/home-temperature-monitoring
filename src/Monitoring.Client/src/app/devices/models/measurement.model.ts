@@ -1,8 +1,8 @@
 export interface MeasurementDto {
   readonly temperature: number;
   readonly humidity: number;
-  readonly heat_index: number;
-  readonly time_stamp: Date;
+  readonly heatIndex: number;
+  readonly timeStamp: Date;
 }
 
 export class Measurement {
@@ -15,8 +15,8 @@ export class Measurement {
     return {
       temperature: dto.temperature,
       humidity: dto.humidity,
-      heatIndex: dto.heat_index,
-      timeStamp: dto.time_stamp,
+      heatIndex: dto.heatIndex,
+      timeStamp: dto.timeStamp,
     };
   }
 }
