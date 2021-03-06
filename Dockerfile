@@ -19,7 +19,7 @@ COPY ./src/Monitoring.Web/Monitoring.Data/Monitoring.Data.csproj ./Monitoring.Da
 RUN dotnet restore ./Monitoring.Api/Monitoring.Api.csproj 
 
 COPY ./src/Monitoring.Web/ .
-RUN dotnet publish ./Monitoring.Api/Monitoring.Api.csproj -c release -o ../published
+RUN dotnet publish ./Monitoring.Api/Monitoring.Api.csproj -c release -o ./published
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 
