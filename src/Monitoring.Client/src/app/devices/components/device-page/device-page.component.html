@@ -2,7 +2,7 @@
   <h1 class="text-center">{{(device$ | async)?.name}}</h1>
   <div class="row">
     <div class="col d-flex flex-column align-items-center"
-         *ngIf="(measurement$|async) as measurement;else loading">
+         *ngIf="(measurement$ | async) as measurement;else loading">
       <div class="last-update">
         <span class="last-update__label pr-1">Last Update:</span>
         <span>{{measurement.timeStamp|date:'medium'}}</span>

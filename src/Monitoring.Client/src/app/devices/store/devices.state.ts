@@ -79,8 +79,8 @@ export class DevicesState {
   loadDevice({ patchState, dispatch }: StateContext<DevicesStateModel>, { deviceUuid }: LoadDevice) {
     dispatch(new SetLoading(true));
     return this.deviceService.getDevice(deviceUuid).pipe(
-      tap(device => patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })),
-      finalize(() => dispatch(new SetLoading(false)))
+      tap((device) => patchState({ [device.uuid]: this.deviceToDeviceItemStateModel(device) })),
+      finalize(() => dispatch([new SetLoading(false), new LoadMeasurements(deviceUuid, 24)]))
     );
   }
 

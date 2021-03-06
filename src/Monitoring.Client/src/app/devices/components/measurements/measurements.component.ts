@@ -2,7 +2,6 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { Measurement } from '@app/devices/models';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { BaseChartDirective, Color, Label } from 'ng2-charts';
-import * as moment from 'moment';
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.component.html',

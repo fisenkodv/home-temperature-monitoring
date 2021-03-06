@@ -1,6 +1,3 @@
-import 'chart.js';
-import 'hammerjs';
-
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,16 +9,19 @@ import { environment } from '@env/environment';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
-
+import 'chart.js';
+import 'hammerjs';
 import { AboutModule } from './about/about.module';
 import { AppRoutingModule } from './app-routing.module';
 import { DevicesModule } from './devices/devices.module';
 import { MaterialModule } from './material.module';
 import { SettingsModule } from './settings/settings.module';
+import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './shell/components/app/app.component';
 import { ShellModule } from './shell/shell.module';
 import { States } from './store/module.store';
-import { SharedModule } from './shared/shared.module';
+
+
 
 @NgModule({
   imports: [

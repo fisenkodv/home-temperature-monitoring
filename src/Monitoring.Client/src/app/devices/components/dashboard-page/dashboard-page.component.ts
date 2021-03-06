@@ -14,7 +14,7 @@ import { DevicesState } from '../../store/devices.state';
   styleUrls: ['./dashboard-page.component.scss'],
 })
 export class DashboardPageComponent implements AfterViewInit, OnDestroy {
-  private FetchInterval = 10000;
+  private FetchInterval = 1_000;
   private unsubscribe: Subject<void> = new Subject();
 
   @Select(ApplicationState.loading)
@@ -23,16 +23,18 @@ export class DashboardPageComponent implements AfterViewInit, OnDestroy {
   @Select(DevicesState.devices)
   devices$: Observable<Device[]>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    this.store.dispatch(new LoadDevices());
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.store.dispatch(new LoadDevices());
-
       timer(0, this.FetchInterval)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(() => this.store.dispatch(new LoadMeasurement()));
     });
+
+    this.store.dispatch(new LoadMeasurement());
   }
 
   ngOnDestroy(): void {

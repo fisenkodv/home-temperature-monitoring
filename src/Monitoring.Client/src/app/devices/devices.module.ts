@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CoreModule } from '@app/core';
 import { MaterialModule } from '@app/material.module';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule, ThemeService } from 'ng2-charts';
 
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { DeviceCardComponent } from './components/device-card/device-card.component';
@@ -21,14 +21,8 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule,
-    MaterialModule,
-    ChartsModule,
-    DevicesRoutingModule,
-  ],
+  imports: [CommonModule, CoreModule, MaterialModule, ChartsModule, DevicesRoutingModule],
   declarations: COMPONENTS,
-  providers: [MeasurementsService],
+  providers: [MeasurementsService, ThemeService],
 })
 export class DevicesModule {}

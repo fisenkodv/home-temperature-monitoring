@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ApplicationState } from '@app/store/app.store';
 import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shell',
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./shell.component.scss'],
 })
 export class ShellComponent {
-  @Select(ApplicationState.loading) loading$: Observable<boolean>;
+  @Select(ApplicationState.loading) loading$: BehaviorSubject<boolean>;
 
   constructor() {}
 }

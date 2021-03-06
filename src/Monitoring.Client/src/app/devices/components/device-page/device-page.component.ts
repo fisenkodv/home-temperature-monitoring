@@ -13,14 +13,19 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./device-page.component.scss'],
 })
 export class DevicePageComponent implements OnInit, OnDestroy {
-  private FetchInterval = 10000;
+  private FetchInterval = 1_000;
   private unsubscribe: Subject<void> = new Subject();
+  private deviceUuid: string;
 
   device$: Observable<Device>;
   measurement$: Observable<Measurement>;
   measurements$: Observable<Measurement[]>;
 
-  constructor(private store: Store, private route: ActivatedRoute) {}
+  constructor(private store: Store, private route: ActivatedRoute) {
+    this.deviceUuid = this.route.snapshot.paramMap.get('uuid');
+
+    this.store.dispatch(new LoadDevice(this.deviceUuid));
+  }
 
   ngOnInit(): void {
     const deviceUuid = this.route.snapshot.paramMap.get('uuid');
@@ -30,12 +35,12 @@ export class DevicePageComponent implements OnInit, OnDestroy {
     this.measurements$ = this.store.select(DevicesState.measurements(deviceUuid));
 
     setTimeout(() => {
-      this.store.dispatch(new LoadDevice(deviceUuid));
-      this.store.dispatch(new LoadMeasurements(deviceUuid, 24));
       timer(0, this.FetchInterval)
         .pipe(takeUntil(this.unsubscribe))
         .subscribe(() => this.store.dispatch(new LoadMeasurement()));
-    });
+
+      this.store.dispatch(new LoadMeasurements(deviceUuid, 24));
+    }, 0);
   }
 
   ngOnDestroy(): void {
